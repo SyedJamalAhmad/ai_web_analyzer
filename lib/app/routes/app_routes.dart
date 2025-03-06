@@ -8,6 +8,7 @@ abstract class Routes {
   static const WEBVIEW = _Paths.WEBVIEW;
   static const URLVIEW = _Paths.URLVIEW;
   static const CHATVIEW = _Paths.CHATVIEW;
+  static const PDFVIEW = _Paths.PDFVIEW;
 }
 
 abstract class _Paths {
@@ -15,4 +16,5 @@ abstract class _Paths {
   static const WEBVIEW = '/WEBVIEW';
   static const URLVIEW = '/URLVIEW';
   static const CHATVIEW = '/CHATVIEW';
+  static const PDFVIEW = '/PDFVIEW';
 }

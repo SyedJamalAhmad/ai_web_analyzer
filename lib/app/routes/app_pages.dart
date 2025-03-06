@@ -1,3 +1,5 @@
+import 'package:ai_web_analyzer/app/modules/pdf/pdf_view.dart';
+import 'package:ai_web_analyzer/app/modules/pdf/pdf_view_binding.dart';
 import 'package:get/get.dart';
 import 'package:ai_web_analyzer/app/modules/chat/chat_view.dart';
 import 'package:ai_web_analyzer/app/modules/chat/chat_view_binding.dart';
@@ -36,6 +38,11 @@ class AppPages {
       name: _Paths.CHATVIEW,
       page: () => ChatView(),
       binding: ChatViewBinding(),
+    ),
+    GetPage(
+      name: _Paths.PDFVIEW,
+      page: () => PDFView(),
+      binding: PDFViewBinding(),
     ),
   ];
 }

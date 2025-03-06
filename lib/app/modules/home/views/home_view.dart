@@ -10,9 +10,10 @@ class HomeView extends GetView<HomeViewCTL> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
- 
+
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: const Text(
           'AI Scraper',
           style: TextStyle(
@@ -23,20 +24,20 @@ class HomeView extends GetView<HomeViewCTL> {
         ),
         backgroundColor: const Color(0xFF1A73E8),
         elevation: 0,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.home, color: Colors.white),
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: const Icon(Icons.info, color: Colors.white),
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: const Icon(Icons.contact_support, color: Colors.white),
-            onPressed: () {},
-          ),
-        ],
+        // actions: [
+        //   IconButton(
+        //     icon: const Icon(Icons.home, color: Colors.white),
+        //     onPressed: () {},
+        //   ),
+        //   IconButton(
+        //     icon: const Icon(Icons.info, color: Colors.white),
+        //     onPressed: () {},
+        //   ),
+        //   IconButton(
+        //     icon: const Icon(Icons.contact_support, color: Colors.white),
+        //     onPressed: () {},
+        //   ),
+        // ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -144,9 +145,8 @@ class HomeView extends GetView<HomeViewCTL> {
                                 // selectionControls:
                                 //     CustomTextSelectionControls(),
                                 onSubmitted: (value) {
-                                controller.goToUrl(context);
-                                 
-                                 
+                                  controller.goToUrl(context);
+
                                   // Get.snackbar(
                                   //   'Search Initiated',
                                   //   'Scraping data from ${controller.searchController.text}',
@@ -215,30 +215,49 @@ class HomeView extends GetView<HomeViewCTL> {
                 ),
               ),
             ),
-            const SizedBox(height: 20),
+            // const SizedBox(height: 20),
 
             // Features Section
-            const Padding(
-              padding: EdgeInsets.all(20.0),
+            Padding(
+              padding: const EdgeInsets.all(20.0),
               child: Column(
                 children: [
-                  FeatureCard(
-                    title: 'Fast & Accurate',
-                    description:
-                        'Get precise data in seconds with our AI algorithms.',
+                  const Text(
+                    'More Features',
+                    style: TextStyle(
+                        fontSize: 18,
+                        color: Color(0xFF1A73E8),
+                        fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 20),
-                  FeatureCard(
-                    title: 'Easy to Use',
-                    description:
-                        'No technical skills required. Just paste the URL and go!',
+                  const SizedBox(height: 20),
+
+                  GestureDetector(
+                    onTap: () async {
+                      await controller.goToPdf();
+                    },
+                    child: const FeatureCard(
+                      title: 'AI PDF Assistant',
+                      description:
+                          'AI-powered PDF reader that helps you summarize, extract key insights, and get answers instantly.',
+                    ),
                   ),
-                  SizedBox(height: 20),
-                  FeatureCard(
-                    title: 'Secure & Reliable',
-                    description:
-                        'Your data is safe with our encrypted processes.',
-                  ),
+                  // FeatureCard(
+                  //   title: 'Fast & Accurate',
+                  //   description:
+                  //       'Get precise data in seconds with our AI algorithms.',
+                  // ),
+                  // SizedBox(height: 20),
+                  // FeatureCard(
+                  //   title: 'Easy to Use',
+                  //   description:
+                  //       'No technical skills required. Just paste the URL and go!',
+                  // ),
+                  // SizedBox(height: 20),
+                  // FeatureCard(
+                  //   title: 'Secure & Reliable',
+                  //   description:
+                  //       'Your data is safe with our encrypted processes.',
+                  // ),
                 ],
               ),
             ),
