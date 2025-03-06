@@ -11,7 +11,7 @@ class URLViewCTL extends GetxController {
   }
 
   @override
-  void onClose() {
+  void onClose() { 
     // TODO: implement onClose
     super.onClose();
   }

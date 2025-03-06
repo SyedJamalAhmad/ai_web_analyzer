@@ -1,22 +1,20 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+// import 'package:flutter/material.dart';
+// import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class WebViewCTL extends GetxController {
-  final TextEditingController searchController = TextEditingController();
+  // final TextEditingController searchController = TextEditingController();
   // String? url;
 
   void goToUrl() {}
 
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
   }
 
   @override
   void onClose() {
-    // TODO: implement onClose
     super.onClose();
   }
 }

@@ -1,3 +1,4 @@
+import 'package:ai_web_analyzer/app/models/url_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -8,17 +9,18 @@ class HomeViewCTL extends GetxController {
   final TextEditingController searchController = TextEditingController();
 
   void goToUrl(BuildContext context) {
-  final url = searchController.text.trim();
-                // if (url.isNotEmpty) {
-                //   Navigator.push(
-                //     context,
-                //     MaterialPageRoute(
-                //       builder: (context) => WebViewScreen(initialUrl: url),
-                //     ),
-                //   );
-                // }
-
-    Get.toNamed(Routes.URLVIEW,arguments: [url]);
+    final url = searchController.text.trim();
+    // if (url.isNotEmpty) {
+    //   Navigator.push(
+    //     context,
+    //     MaterialPageRoute(
+    //       builder: (context) => WebViewScreen(initialUrl: url),
+    //     ),
+    //   );
+    // }
+    UrlHandler.url = url;
+    Get.toNamed(Routes.URLVIEW);
+    // Get.toNamed(Routes.URLVIEW,arguments: [url]);
   }
 
   @override
@@ -33,7 +35,6 @@ class HomeViewCTL extends GetxController {
     super.onClose();
   }
 }
-
 
 // class CustomTextSelectionControls extends MaterialTextSelectionControls {
 //   @override
