@@ -19,17 +19,20 @@ class URLView extends GetView<URLViewCTL> {
         length: 2, // Two Tabs
         child: Scaffold(
           appBar: AppBar(
-            title: const Center(
-              child: Text(
-                'Chat with WebPage',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
+            title: Text(
+              'WebChat AI',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
               ),
             ),
-            automaticallyImplyLeading: false,
+            
+            leading: GestureDetector(
+              onTap: (){
+                Get.back();
+              },
+              child: Icon(Icons.arrow_back_ios_new_rounded,color: Colors.white,)),
             elevation: 0,
             centerTitle: true,
             backgroundColor: const Color(0xFF1A73E8), // Your Color
@@ -39,8 +42,8 @@ class URLView extends GetView<URLViewCTL> {
               labelColor: Colors.white,
               unselectedLabelColor: Colors.white70,
               tabs: [
-                Tab(icon: Icon(Icons.language), text: "Browsing"),
-                Tab(icon: Icon(Icons.chat), text: "Ai Chat"),
+                Tab(icon: Icon(Icons.travel_explore), text: "Browsing"),
+                Tab(icon: Icon(Icons.forum_rounded), text: "AI Chat"),
               ],
             ),
           ),
