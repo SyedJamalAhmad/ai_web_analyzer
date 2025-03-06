@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -218,28 +219,25 @@ class HomeView extends GetView<HomeViewCTL> {
             // const SizedBox(height: 20),
 
             // Features Section
-            Padding(
-              padding: const EdgeInsets.all(20.0),
+            const Padding(
+              padding: EdgeInsets.all(20.0),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'More Features',
+                  Text(
+                    'More Features:',
                     style: TextStyle(
-                        fontSize: 18,
-                        color: Color(0xFF1A73E8),
+                        fontSize: 20,
+                        // color: Color(0xFF1A73E8),
+                        color: Colors.black,
                         fontWeight: FontWeight.bold),
                   ),
-                  const SizedBox(height: 20),
+                  SizedBox(height: 20),
 
-                  GestureDetector(
-                    onTap: () async {
-                      await controller.goToPdf();
-                    },
-                    child: const FeatureCard(
-                      title: 'AI PDF Assistant',
-                      description:
-                          'AI-powered PDF reader that helps you summarize, extract key insights, and get answers instantly.',
-                    ),
+                  FeatureCard(
+                    title: 'AI PDF Assistant',
+                    description:
+                        'AI powered PDF reader that helps you summarize, extract key insights, and get answers instantly.',
                   ),
                   // FeatureCard(
                   //   title: 'Fast & Accurate',
@@ -280,33 +278,94 @@ class FeatureCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    HomeViewCTL controller = Get.find();
     return Card(
       elevation: 4,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(15),
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            Text(
-              title,
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFF1A73E8),
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.blue.shade50, Colors.white],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          borderRadius: BorderRadius.circular(15),
+          border: Border.all(color: Colors.blue.shade100, width: 1),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Icon(
+                    CupertinoIcons.arrow_up_doc_fill,
+                    size: 32,
+                    color: Colors.blue.shade800,
+                  ),
+                  const SizedBox(width: 10),
+                  Text(
+                    title,
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.blue.shade800,
+                      fontFamily: 'Poppins',
+                    ),
+                  ),
+                ],
               ),
-            ),
-            const SizedBox(height: 10),
-            Text(
-              description,
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.grey[700],
+              const SizedBox(height: 12),
+              Text(
+                description,
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.grey.shade700,
+                  fontFamily: 'Roboto',
+                  height: 1.5,
+                ),
               ),
-              textAlign: TextAlign.center,
-            ),
-          ],
+           
+              
+              const SizedBox(height: 10),
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("Chat with PDF →",style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black
+                  ),),
+                  Align(
+                    alignment: Alignment.bottomRight,
+                    child: GestureDetector(
+
+                      onTap: () async{
+                         await controller.goToPdf();
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                        decoration: BoxDecoration(
+                          color: Colors.blue.shade800,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: const Text(
+                          'Try Now',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
