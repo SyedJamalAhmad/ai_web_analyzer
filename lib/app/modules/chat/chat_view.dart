@@ -1,3 +1,4 @@
+import 'package:ai_web_analyzer/app/models/ai_handler.dart';
 import 'package:ai_web_analyzer/app/models/current_content.dart';
 import 'package:ai_web_analyzer/app/models/url_handler.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,7 @@ import 'package:flutter_markdown/flutter_markdown.dart'; // For Markdown
 import 'package:ai_web_analyzer/app/utills/size_config.dart'; // Assuming you still need this
 
 class Message {
-  final String text; 
+  final String text;
   final MessageType type;
 
   Message({required this.text, required this.type});
@@ -39,13 +40,7 @@ class ChatController extends GetxController {
   }
 
   Future<void> sendMessage() async {
-    GenerativeModel aiModel = GenerativeModel(
-        model: 'gemini-2.0-flash-lite',
-        apiKey: 'AIzaSyCj-pkjlMrppk-ZNsPlkFq5U9t9jeUahr8',
-        // generationConfig: GenerationConfig(maxOutputTokens: 200),
-        systemInstruction: Content.system(
-            'Act as a web data analyzer and professional content analyzer and gather some information about this webpage: ${UrlHandler.url} and the content of this webpage is ${WebContentManager.currentContent} and than answer the queries of user. try your best to answer it accordingly from this webpage and if there is not enough information than return a made of answer but very much accurate as you can. Try your best to make accurate precise and short possible answer.'));
-
+    GenerativeModel aiModel = AiHandler.getAiModel();
     if (textController.text.trim().isEmpty) return;
 
     String userMessage = textController.text.trim();
@@ -236,24 +231,31 @@ class ChatBubble extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (message.type == MessageType.ai)
-             CircleAvatar(
+            CircleAvatar(
               radius: SizeConfig.blockSizeHorizontal * 4,
               backgroundColor: Colors.blueGrey.shade300,
-              child: Icon(Icons.memory, color: Colors.amber,
-              size: SizeConfig.blockSizeHorizontal * 5,
+              child: Icon(
+                Icons.memory,
+                color: Colors.amber,
+                size: SizeConfig.blockSizeHorizontal * 5,
               ),
             ),
           const SizedBox(width: 8),
           Container(
-            constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.65),
+            constraints: BoxConstraints(
+                maxWidth: MediaQuery.of(context).size.width * 0.65),
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
               color: message.type == MessageType.user
                   ? Colors.blue.shade600
                   : Colors.blueGrey.shade50,
               borderRadius: BorderRadius.only(
-                topLeft: message.type == MessageType.user ? Radius.circular(12) : Radius.circular(4),
-                topRight: message.type == MessageType.user ? Radius.circular(4) : Radius.circular(12),
+                topLeft: message.type == MessageType.user
+                    ? Radius.circular(12)
+                    : Radius.circular(4),
+                topRight: message.type == MessageType.user
+                    ? Radius.circular(4)
+                    : Radius.circular(12),
                 bottomLeft: Radius.circular(12),
                 bottomRight: Radius.circular(12),
               ),
@@ -271,7 +273,8 @@ class ChatBubble extends StatelessWidget {
                     styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context))
                         .copyWith(p: TextStyle(color: Colors.grey.shade800)),
                   )
-                : Text(message.text, style: const TextStyle(color: Colors.white)),
+                : Text(message.text,
+                    style: const TextStyle(color: Colors.white)),
           ),
           //  const SizedBox(width: 8),
           // if (message.type == MessageType.user)
@@ -282,11 +285,13 @@ class ChatBubble extends StatelessWidget {
           //     size: SizeConfig.blockSizeHorizontal * 4,
           //     ),
           //   ),
-         
+
           if (message.type == MessageType.ai)
             IconButton(
-              icon: const Icon(Icons.content_copy, size: 16, color: Colors.grey),
-              onPressed: () => Clipboard.setData(ClipboardData(text: message.text)),
+              icon:
+                  const Icon(Icons.content_copy, size: 16, color: Colors.grey),
+              onPressed: () =>
+                  Clipboard.setData(ClipboardData(text: message.text)),
             ),
         ],
       ),

@@ -1,3 +1,4 @@
+import 'package:ai_web_analyzer/app/models/pdf_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ai_web_analyzer/app/modules/chat/chat_view.dart';
@@ -6,7 +7,6 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
-
 
 class PDFScreenView extends StatefulWidget {
   const PDFScreenView({super.key});
@@ -20,8 +20,7 @@ class _PDFScreenViewState extends State<PDFScreenView> {
       true.obs; // Controls which view is full-screen
 
   @override
-  final String pdfPath='';
-
+  final String pdfPath = PdfHandler.pdfpath;
 
   @override
   Widget build(BuildContext context) {
@@ -38,12 +37,6 @@ class _PDFScreenViewState extends State<PDFScreenView> {
     );
   }
 }
-
-
-
-
-
-
 
 class PDFUploader extends StatefulWidget {
   @override
@@ -88,7 +81,6 @@ class _PDFUploaderState extends State<PDFUploader> {
       ),
     );
   }
-
 }
 
 class PDFViewerScreen extends StatelessWidget {
