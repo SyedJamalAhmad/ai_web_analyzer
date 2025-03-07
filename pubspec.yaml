@@ -48,6 +48,7 @@ dependencies:
   flutter_pdfview: ^1.4.0
   # pdfx: ^2.8.0
   syncfusion_flutter_pdfviewer: ^28.2.9
+  flutter_tesseract_ocr: ^0.4.28
   # pdf_text: ^0.5.0
   # flutter_markdown: ^0.7.6+2
   # webview_flutter_android: ^4.3.2

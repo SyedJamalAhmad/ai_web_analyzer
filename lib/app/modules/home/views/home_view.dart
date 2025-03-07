@@ -269,9 +269,11 @@ class HomeView extends GetView<HomeViewCTL> {
           Obx(() {
             if (PdfHandler.isLoading.value) {
               return Container(
-                color: Colors.black.withOpacity(0.5),
-                child: const Center(
-                  child: CircularProgressIndicator(),
+                color: Colors.black.withOpacity(0.7),
+                child: Center(
+                  child: SizedBox(
+                      width: SizeConfig.screenWidth * 0.7,
+                      child: const LinearProgressIndicator()),
                 ),
               );
             }
