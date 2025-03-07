@@ -55,7 +55,7 @@ class ChatController extends GetxController {
     try {
       // Prepare the content for the AI model.
       final content = Content('user', [TextPart(userMessage)]);
-      
+
       // Add the user's message to the history.
       history.add(content);
 
@@ -184,7 +184,7 @@ class ChatView extends StatelessWidget {
                   ),
                   const SizedBox(width: 12),
                   Container(
-                    padding: EdgeInsets.only(left: 5),
+                    padding: const EdgeInsets.only(left: 5),
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         colors: [Colors.blue.shade600, Colors.blue.shade400],
@@ -227,7 +227,9 @@ class ChatBubble extends StatelessWidget {
       child: Row(
         mainAxisAlignment: message.type == MessageType.user
             ? MainAxisAlignment.end
-            : MainAxisAlignment.start,
+            : message.type == MessageType.ai
+                ? MainAxisAlignment.start
+                : MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (message.type == MessageType.ai)
@@ -248,11 +250,15 @@ class ChatBubble extends StatelessWidget {
             decoration: BoxDecoration(
               color: message.type == MessageType.user
                   ? Colors.blue.shade600
-                  : Colors.blueGrey.shade50,
+                  : message.type == MessageType.ai
+                      ? Colors.blueGrey.shade50
+                      : Colors.amber.shade300,
               borderRadius: BorderRadius.only(
                 topLeft: message.type == MessageType.user
                     ? Radius.circular(12)
-                    : Radius.circular(4),
+                    : message.type == MessageType.ai
+                        ? Radius.circular(4)
+                        : Radius.circular(12),
                 topRight: message.type == MessageType.user
                     ? Radius.circular(4)
                     : Radius.circular(12),
@@ -273,8 +279,12 @@ class ChatBubble extends StatelessWidget {
                     styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context))
                         .copyWith(p: TextStyle(color: Colors.grey.shade800)),
                   )
-                : Text(message.text,
-                    style: const TextStyle(color: Colors.white)),
+                : message.type == MessageType.user
+                    ? Text(message.text,
+                        style: const TextStyle(color: Colors.white))
+                    : Text(message.text,
+                        style:
+                            const TextStyle(fontSize: 10, color: Colors.black)),
           ),
           //  const SizedBox(width: 8),
           // if (message.type == MessageType.user)

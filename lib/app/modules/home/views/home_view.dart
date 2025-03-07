@@ -270,10 +270,13 @@ class HomeView extends GetView<HomeViewCTL> {
             if (PdfHandler.isLoading.value) {
               return Container(
                 color: Colors.black.withOpacity(0.7),
-                child: Center(
+                child: const Center(
                   child: SizedBox(
-                      width: SizeConfig.screenWidth * 0.7,
-                      child: const LinearProgressIndicator()),
+                      // width: SizeConfig.screenWidth * 0.7,
+                      child: CircularProgressIndicator(
+                    strokeWidth: 8,
+                    color: Colors.blue,
+                  )),
                 ),
               );
             }
@@ -351,7 +354,7 @@ class FeatureCard extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
+                  const Text(
                     "Chat with PDF →",
                     style: TextStyle(
                         fontSize: 18,
