@@ -205,7 +205,7 @@ String apiKey = 'AIzaSyBfsg3ZEwnl0CRPYGBh1r_XhFu9tChvL5o';
                 Obx(() => selectedReason.value == "Other"
                     ? TextField(
                         controller: customReasonController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelText: "Enter custom reason",
                         ),
                       )
@@ -215,7 +215,7 @@ String apiKey = 'AIzaSyBfsg3ZEwnl0CRPYGBh1r_XhFu9tChvL5o';
           ),
           actions: [
             TextButton(
-              child: Text("Cancel"),
+              child: const Text("Cancel"),
               onPressed: () {
                 Navigator.of(context).pop();
               },

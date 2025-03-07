@@ -55,7 +55,7 @@ class ChatController extends GetxController {
     try {
       // Prepare the content for the AI model.
       final content = Content('user', [TextPart(userMessage)]);
-
+      
       // Add the user's message to the history.
       history.add(content);
 

@@ -1,3 +1,4 @@
+import 'package:ai_web_analyzer/app/models/ai_handler.dart';
 import 'package:ai_web_analyzer/app/models/pdf_handler.dart';
 import 'package:ai_web_analyzer/app/models/url_handler.dart';
 import 'package:flutter/material.dart';
@@ -21,33 +22,37 @@ class HomeViewCTL extends GetxController {
     //     ),
     //   );
     // }
+    AiHandler.chattype = 'url';
+
     UrlHandler.url = url;
     Get.toNamed(Routes.URLVIEW);
     // Get.toNamed(Routes.URLVIEW,arguments: [url]);
   }
 
   Future<void> goToPdf() async {
-    try {
-      // Open file picker to select a PDF
-      FilePickerResult? result = await FilePicker.platform.pickFiles(
-        type: FileType.custom,
-        allowedExtensions: ['pdf'],
-      );
+    // try {
+    //   // Open file picker to select a PDF
+    //   FilePickerResult? result = await FilePicker.platform.pickFiles(
+    //     type: FileType.custom,
+    //     allowedExtensions: ['pdf'],
+    //   );
 
-      if (result != null) {
-        File pdfFile = File(result.files.single.path!);
-        print("PDF Selected: ${pdfFile.path}");
-        PdfHandler.pdfpath = pdfFile.path;
-        Get.toNamed(Routes.PDFVIEW);
+    //   if (result != null) {
+    //     File pdfFile = File(result.files.single.path!);
+    //     print("PDF Selected: ${pdfFile.path}");
+    //     PdfHandler.pdfpath = pdfFile.path;
+    //     Get.toNamed(Routes.PDFVIEW);
 
-        // Here, you can upload the file to your server or process it
-        // Example: Upload function -> uploadPDF(pdfFile);
-      } else {
-        print("No file selected");
-      }
-    } catch (e) {
-      print("Error picking file: $e");
-    }
+    //     // Here, you can upload the file to your server or process it
+    //     // Example: Upload function -> uploadPDF(pdfFile);
+    //   } else {
+    //     print("No file selected");
+    //   }
+    // } catch (e) {
+    //   print("Error picking file: $e");
+    // }
+    AiHandler.chattype = 'pdf';
+    PdfHandler().extractTextFromPDF();
   }
 
   @override
