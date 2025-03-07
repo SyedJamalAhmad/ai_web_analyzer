@@ -117,7 +117,7 @@ class WebView extends StatefulWidget {
 
 class _WebViewState extends State<WebView> with AutomaticKeepAliveClientMixin {
   final WebViewCTL controller =
-      Get.put(WebViewCTL()); // ✅ Ensure it's initialized once
+      Get.put(WebViewCTL());
   late final WebViewController _webController;
 
   @override

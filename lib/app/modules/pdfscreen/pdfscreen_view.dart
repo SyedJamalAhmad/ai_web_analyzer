@@ -15,7 +15,8 @@ class PDFScreenView extends StatefulWidget {
   State<PDFScreenView> createState() => _PDFScreenViewState();
 }
 
-class _PDFScreenViewState extends State<PDFScreenView> {
+class _PDFScreenViewState extends State<PDFScreenView>
+    with AutomaticKeepAliveClientMixin {
   final RxBool isChatFullscreen =
       true.obs; // Controls which view is full-screen
 
@@ -23,9 +24,11 @@ class _PDFScreenViewState extends State<PDFScreenView> {
   final String pdfPath = PdfHandler.pdfpath;
 
   @override
+  bool get wantKeepAlive => true; // ✅ Keeps WebView in memory
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       body: PDFView(
         filePath: pdfPath,
         enableSwipe: true,

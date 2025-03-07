@@ -150,7 +150,7 @@ class HomeView extends GetView<HomeViewCTL> {
                                     // selectionControls:
                                     //     CustomTextSelectionControls(),
                                     onSubmitted: (value) {
-                                      controller.goToUrl(context);
+                                      controller.goToUrl();
 
                                       // Get.snackbar(
                                       //   'Search Initiated',
@@ -168,7 +168,7 @@ class HomeView extends GetView<HomeViewCTL> {
                                       color: Colors.white),
                                   // icon: const Icon(Icons.search, color: Colors.white),
                                   onPressed: () {
-                                    controller.goToUrl(context);
+                                    controller.goToUrl();
                                     // Get.snackbar(
                                     //   'Search Initiated',
                                     //   'Scraping data from ${controller.searchController.text}',

@@ -60,6 +60,7 @@ class PdfHandler {
 
       if (result != null && result.files.single.path != null) {
         String pdfPath = result.files.single.path!;
+        pdfpath = pdfPath;
         print("📄 PDF Selected: $pdfPath");
 
         // Load the PDF document using Syncfusion
@@ -76,7 +77,8 @@ class PdfHandler {
               extractor.extractText(startPageIndex: i, endPageIndex: i);
 
           // Clean text: Remove extra spaces and blank lines
-          pageText = pageText.replaceAll(RegExp(r'\n\s*\n'), '\n').trim();
+          // pageText = pageText.replaceAll(RegExp(r'\n\s*\n'), '\n').trim();
+          pageText = pageText.replaceAll(RegExp(r'\n\s*\n'), ' ').trim();
 
           if (pageText.isNotEmpty) {
             formattedPages.add("📄 **Page ${i + 1}**\n$pageText");
@@ -88,7 +90,8 @@ class PdfHandler {
             String ocrText = await FlutterTesseractOcr.extractText(pdfPath);
 
             // Clean OCR text
-            ocrText = ocrText.replaceAll(RegExp(r'\n\s*\n'), '\n').trim();
+            // ocrText = ocrText.replaceAll(RegExp(r'\n\s*\n'), '\n').trim();
+            ocrText = ocrText.replaceAll(RegExp(r'\n\s*\n'), ' ').trim();
 
             formattedPages
                 .add("📄 **Page ${i + 1} (OCR Extracted)**\n$ocrText");
@@ -106,7 +109,8 @@ class PdfHandler {
 
           String finalExtractedText =
               formattedPages.join("\n\n════════════════════════\n\n");
-          print("✅ Extracted Text:\n$finalExtractedText");
+          pdfText = finalExtractedText;
+          developer.log("✅ Extracted Text:\n$finalExtractedText");
         }
       } else {
         Get.snackbar('Something Went wronge', 'No File Selected');
