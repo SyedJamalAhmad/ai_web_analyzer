@@ -1,4 +1,4 @@
-package com.example.ai_web_analyzer
+package app.chatwebai.pdfai_app
 
 import io.flutter.embedding.android.FlutterActivity
 
