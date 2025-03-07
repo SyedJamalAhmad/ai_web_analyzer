@@ -1,4 +1,5 @@
 import 'package:ai_web_analyzer/app/modules/pdfscreen/pdfscreen_view.dart';
+import 'package:ai_web_analyzer/app/utills/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ai_web_analyzer/app/modules/chat/chat_view.dart';
@@ -24,7 +25,26 @@ class _PDFViewState extends State<PDFView> {
     double margin = 20; // Space from screen edges
 
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color(0xFF1A73E8),
+        title: Text("PDF Viewer",style: TextStyle(
+          fontSize: SizeConfig.blockSizeHorizontal * 5,
+          fontWeight: FontWeight.bold,
+          color: Colors.white
+          
+
+        ),
+        ),
+        centerTitle: true,
+        leading: GestureDetector(
+          onTap: (){
+            Get.back();
+          },
+          child: Icon(Icons.arrow_back_ios_new_rounded,
+          color: Colors.white,)),
+      ),
       body: Obx(() {
+        
         bool isChatBig = isChatFullscreen.value;
         Widget fullScreenView = isChatBig ? ChatView() : const PDFScreenView();
         Widget smallView = isChatBig ? const PDFScreenView() : ChatView();
@@ -56,6 +76,7 @@ class _PDFViewState extends State<PDFView> {
                 ),
               ),
             ),
+        
           ],
         );
       }),

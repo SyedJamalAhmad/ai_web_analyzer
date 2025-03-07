@@ -25,7 +25,7 @@ class _PDFScreenViewState extends State<PDFScreenView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("PDF Viewer")),
+      
       body: PDFView(
         filePath: pdfPath,
         enableSwipe: true,
