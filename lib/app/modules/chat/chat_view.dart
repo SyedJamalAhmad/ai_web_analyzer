@@ -1,3 +1,4 @@
+import 'package:ai_web_analyzer/app/fire_base/fire_base.dart';
 import 'package:ai_web_analyzer/app/models/ai_handler.dart';
 import 'package:ai_web_analyzer/app/models/current_content.dart';
 import 'package:ai_web_analyzer/app/models/url_handler.dart';
@@ -13,6 +14,7 @@ import 'package:ai_web_analyzer/app/utills/size_config.dart'; // Assuming you st
 class Message {
   final String text;
   final MessageType type;
+  RxBool isReporeted = false.obs;
 
   Message({required this.text, required this.type});
 }
@@ -20,8 +22,145 @@ class Message {
 enum MessageType { user, ai, note }
 
 class ChatController extends GetxController {
+  final FeedbackService feedbackService = FeedbackService();
+
   final RxList<Message> messages = <Message>[].obs;
   final TextEditingController textController = TextEditingController();
+  submited(int index, BuildContext context) {
+    messages[index].isReporeted.value = true;
+
+    final overlay = Overlay.of(context);
+    final overlayEntry = OverlayEntry(
+      builder: (context) => Center(
+        child: Material(
+          color: Colors.transparent,
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+            decoration: BoxDecoration(
+              color: Colors.black.withOpacity(0.8),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Text(
+              'Thanks for your feedback!',
+              style: const TextStyle(color: Colors.white, fontSize: 16),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    overlay.insert(overlayEntry);
+
+    // Remove after 2 seconds
+    Future.delayed(const Duration(seconds: 2), () {
+      overlayEntry.remove();
+    });
+  }
+
+// void reportMessage(BuildContext context, String message) {
+  Future<void> reportMessage(
+      BuildContext context, String message, int index) async {
+    // String uniqueid = '1';
+    // String uniqueid = await Purchases.appUserID;
+    final TextEditingController customReasonController =
+        TextEditingController();
+    List<String> reasons = [
+      "harmful/Unsafe",
+      "Sexual Explicit Content",
+      'Repetitive',
+      'Hate and harrasment',
+      'Misinformation',
+      'Frauds and scam',
+      "Spam",
+      "Other"
+    ];
+    RxString selectedReason = "".obs;
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Report Inappropriate Message"),
+          content: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("Select a reason:"),
+                ...reasons.map((reason) {
+                  return Obx(() => RadioListTile(
+                        title: Text(reason),
+                        value: reason,
+                        groupValue: selectedReason.value,
+                        onChanged: (value) {
+                          selectedReason.value = value!;
+                          if (selectedReason != "Other") {
+                            customReasonController.clear();
+                          }
+                        },
+                      ));
+                }).toList(),
+                Obx(() => selectedReason.value == "Other"
+                    ? TextField(
+                        controller: customReasonController,
+                        decoration: const InputDecoration(
+                          labelText: "Enter custom reason",
+                        ),
+                      )
+                    : Container()),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              child: const Text("Cancel"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            ElevatedButton(
+              child: Text("Report"),
+              onPressed: () async {
+                String reportReason = selectedReason.value == "Other"
+                    ? customReasonController.text
+                    : selectedReason.value;
+                print('$reportReason');
+                if (reportReason.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text("Please select or enter a reason.")),
+                  );
+                  return;
+                }
+
+                EasyLoading.show(status: "Please Wait...");
+                // print('now easyloading');
+                try {
+                  // print('now ending easyloading');
+
+                  Navigator.of(context).pop();
+                  EasyLoading.dismiss();
+                  submited(index, context);
+                  await feedbackService.submitFeedback(
+                      'FeedBack:$reportReason  Message:$message', false);
+
+                  // ScaffoldMessenger.of(context).showSnackBar(
+                  //   SnackBar(content: Text("Message reported successfully.")),
+                  // );
+                  // generatedContent[index].isFeedBack.value = true;
+                  // generatedContent[index].isGood.value = false;
+                } catch (e) {
+                  print(e);
+                  EasyLoading.dismiss();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text("Failed to report message: $e")),
+                  );
+                }
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   // Initialize the conversation history.  Make it Rx so the UI rebuilds when the history changes.
   final RxList<Content> history = <Content>[].obs;
@@ -92,7 +231,7 @@ class ChatController extends GetxController {
     } catch (e) {
       // Handle errors during API call
       messages.add(Message(
-          text: 'Something went wrong, Please try again',
+          text: 'Please Check your Internet Connection',
           type: MessageType.note));
       // messages.add(Message(text: 'Error: $e', type: MessageType.note));
       developer.log('Error during AI response: $e');
@@ -148,7 +287,7 @@ class ChatView extends StatelessWidget {
                   itemCount: controller.messages.length,
                   itemBuilder: (context, index) {
                     final message = controller.messages[index];
-                    return ChatBubble(message: message);
+                    return ChatBubble(message: message, index: index);
                   },
                 ),
               ),
@@ -217,8 +356,10 @@ class ChatView extends StatelessWidget {
 
 class ChatBubble extends StatelessWidget {
   final Message message;
+  final int index;
 
-  const ChatBubble({Key? key, required this.message}) : super(key: key);
+  const ChatBubble({Key? key, required this.message, required this.index})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -243,66 +384,91 @@ class ChatBubble extends StatelessWidget {
               ),
             ),
           const SizedBox(width: 8),
-          Container(
-            constraints: BoxConstraints(
-                maxWidth: MediaQuery.of(context).size.width * 0.65),
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: message.type == MessageType.user
-                  ? Colors.blue.shade600
-                  : message.type == MessageType.ai
-                      ? Colors.blueGrey.shade50
-                      : Colors.amber.shade300,
-              borderRadius: BorderRadius.only(
-                topLeft: message.type == MessageType.user
-                    ? Radius.circular(12)
-                    : message.type == MessageType.ai
-                        ? Radius.circular(4)
-                        : Radius.circular(12),
-                topRight: message.type == MessageType.user
-                    ? Radius.circular(4)
-                    : Radius.circular(12),
-                bottomLeft: Radius.circular(12),
-                bottomRight: Radius.circular(12),
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
-                  blurRadius: 5,
-                  offset: const Offset(0, 2),
+          Obx(
+            () => Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  constraints: BoxConstraints(
+                      maxWidth: MediaQuery.of(context).size.width * 0.65),
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: message.type == MessageType.user
+                        ? Colors.blue.shade600
+                        : message.type == MessageType.ai
+                            ? Colors.blueGrey.shade50
+                            : Colors.red.shade300,
+                    borderRadius: BorderRadius.only(
+                      topLeft: message.type == MessageType.user
+                          ? Radius.circular(12)
+                          : message.type == MessageType.ai
+                              ? Radius.circular(4)
+                              : Radius.circular(12),
+                      topRight: message.type == MessageType.user
+                          ? Radius.circular(4)
+                          : Radius.circular(12),
+                      bottomLeft: Radius.circular(12),
+                      bottomRight: Radius.circular(12),
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 5,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  child: message.type == MessageType.ai
+                      ? MarkdownBody(
+                          data: message.text,
+                          styleSheet: MarkdownStyleSheet.fromTheme(
+                                  Theme.of(context))
+                              .copyWith(
+                                  p: TextStyle(color: Colors.grey.shade800)),
+                        )
+                      : message.type == MessageType.user
+                          ? Text(message.text,
+                              style: const TextStyle(color: Colors.white))
+                          : Text(message.text,
+                              style: const TextStyle(
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white)),
                 ),
+                if (!message.isReporeted.value &&
+                    message.type == MessageType.ai)
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    // mainAxisSize: MainAxisSize.min,
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.content_copy,
+                            size: 16, color: Colors.grey),
+                        onPressed: () => Clipboard.setData(
+                            ClipboardData(text: message.text)),
+                      ),
+                      IconButton(
+                          icon: Icon(Icons.thumb_up,
+                              size: 16, color: Colors.grey),
+                          onPressed: () {
+                            ChatController ctl = Get.find();
+                            ctl.feedbackService
+                                .submitFeedback(message.text, true);
+                            ctl.submited(index, context);
+                          }),
+                      IconButton(
+                          icon: Icon(Icons.thumb_down,
+                              size: 16, color: Colors.grey),
+                          onPressed: () async {
+                            ChatController ctl = Get.find();
+                            await ctl.reportMessage(
+                                context, message.text, index);
+                          }),
+                    ],
+                  ),
               ],
             ),
-            child: message.type == MessageType.ai
-                ? MarkdownBody(
-                    data: message.text,
-                    styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context))
-                        .copyWith(p: TextStyle(color: Colors.grey.shade800)),
-                  )
-                : message.type == MessageType.user
-                    ? Text(message.text,
-                        style: const TextStyle(color: Colors.white))
-                    : Text(message.text,
-                        style:
-                            const TextStyle(fontSize: 10, color: Colors.black)),
           ),
-          //  const SizedBox(width: 8),
-          // if (message.type == MessageType.user)
-          //    CircleAvatar(
-          //     radius: SizeConfig.blockSizeHorizontal * 4,
-          //     backgroundColor: Colors.blue,
-          //     child: Icon(Icons.person, color: Colors.white,
-          //     size: SizeConfig.blockSizeHorizontal * 4,
-          //     ),
-          //   ),
-
-          if (message.type == MessageType.ai)
-            IconButton(
-              icon:
-                  const Icon(Icons.content_copy, size: 16, color: Colors.grey),
-              onPressed: () =>
-                  Clipboard.setData(ClipboardData(text: message.text)),
-            ),
         ],
       ),
     );
