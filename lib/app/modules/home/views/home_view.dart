@@ -17,7 +17,7 @@ class HomeView extends GetView<HomeViewCTL> {
       appBar: AppBar(
         centerTitle: true,
         title: const Text(
-          'AI Scraper',
+          'AI Web Analyzer',
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
@@ -77,7 +77,7 @@ class HomeView extends GetView<HomeViewCTL> {
                           ),
                           const SizedBox(height: 10),
                           const Text(
-                            'AI-powered website scraping made simple and efficient.',
+                            'AI-powered website analyzing made simple and efficient.',
                             style: TextStyle(
                               fontSize: 16,
                               color: Colors.white70,
