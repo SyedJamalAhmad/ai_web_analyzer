@@ -435,37 +435,42 @@ class ChatBubble extends StatelessWidget {
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white)),
                 ),
-                if (!message.isReporeted.value &&
-                    message.type == MessageType.ai)
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    // mainAxisSize: MainAxisSize.min,
-                    children: [
+                Row(
+                  children: [
+                    if (message.type == MessageType.ai)
                       IconButton(
                         icon: const Icon(Icons.content_copy,
                             size: 16, color: Colors.grey),
                         onPressed: () => Clipboard.setData(
                             ClipboardData(text: message.text)),
                       ),
-                      IconButton(
-                          icon: Icon(Icons.thumb_up,
-                              size: 16, color: Colors.grey),
-                          onPressed: () {
-                            ChatController ctl = Get.find();
-                            ctl.feedbackService
-                                .submitFeedback(message.text, true);
-                            ctl.submited(index, context);
-                          }),
-                      IconButton(
-                          icon: Icon(Icons.thumb_down,
-                              size: 16, color: Colors.grey),
-                          onPressed: () async {
-                            ChatController ctl = Get.find();
-                            await ctl.reportMessage(
-                                context, message.text, index);
-                          }),
-                    ],
-                  ),
+                    if (!message.isReporeted.value &&
+                        message.type == MessageType.ai)
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        // mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                              icon: Icon(Icons.thumb_up,
+                                  size: 16, color: Colors.grey),
+                              onPressed: () {
+                                ChatController ctl = Get.find();
+                                ctl.feedbackService
+                                    .submitFeedback(message.text, true);
+                                ctl.submited(index, context);
+                              }),
+                          IconButton(
+                              icon: Icon(Icons.thumb_down,
+                                  size: 16, color: Colors.grey),
+                              onPressed: () async {
+                                ChatController ctl = Get.find();
+                                await ctl.reportMessage(
+                                    context, message.text, index);
+                              }),
+                        ],
+                      ),
+                  ],
+                ),
               ],
             ),
           ),
