@@ -11,6 +11,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 class ChatViewCTL extends GetxController {
   String apiKey = RCVariables.apiKey;
 
+
   final List<
       ({
         Image? image,
