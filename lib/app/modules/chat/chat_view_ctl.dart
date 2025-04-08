@@ -1,3 +1,4 @@
+import 'package:ai_web_analyzer/app/utills/remoteconfig_variables.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -8,7 +9,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 // import 'package:purchases_flutter/purchases_flutter.dart';
 
 class ChatViewCTL extends GetxController {
-  String apiKey = 'AIzaSyBfsg3ZEwnl0CRPYGBh1r_XhFu9tChvL5o';
+  String apiKey = RCVariables.apiKey;
 
   final List<
       ({
