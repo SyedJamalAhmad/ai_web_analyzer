@@ -1,4 +1,5 @@
 import 'package:ai_web_analyzer/app/fire_base/fire_base.dart';
+import 'package:ai_web_analyzer/app/fire_base/remoteconfig_services.dart';
 import 'package:ai_web_analyzer/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -6,6 +7,7 @@ import 'package:get/get.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await MyFireBaseHandle.initialize();
+  await RemoteConfigService().initialize();
   runApp(const MyApp());
 }
 

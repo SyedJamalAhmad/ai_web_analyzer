@@ -2,6 +2,7 @@ import 'package:ai_web_analyzer/app/fire_base/fire_base.dart';
 import 'package:ai_web_analyzer/app/models/ai_handler.dart';
 import 'package:ai_web_analyzer/app/models/current_content.dart';
 import 'package:ai_web_analyzer/app/models/url_handler.dart';
+import 'package:ai_web_analyzer/app/utills/remoteconfig_variables.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -180,6 +181,14 @@ class ChatController extends GetxController {
 
   Future<void> sendMessage() async {
     GenerativeModel aiModel = AiHandler.getAiModel();
+    // GenerativeModel aiModel = GenerativeModel(
+    //     model: 'gemini-2.0-flash-lite',
+    //     // model: RCVariables.geminiModel,
+    //     apiKey: 'AIzaSyCj-pkjlMrppk-ZNsPlkFq5U9t9jeUahr8',
+    //     // apiKey: RCVariables.apiKey,
+    //     // generationConfig: GenerationConfig(maxOutputTokens: 200),
+    //     systemInstruction: Content.system('Act as a girl named rosy'));
+
     if (textController.text.trim().isEmpty) return;
 
     String userMessage = textController.text.trim();
@@ -192,9 +201,12 @@ class ChatController extends GetxController {
     EasyLoading.show(status: 'Thinking...');
 
     try {
+      print('here0');
+      print('model: ${RCVariables.geminiModel}, key ${RCVariables.apiKey}');
+
       // Prepare the content for the AI model.
       final content = Content('user', [TextPart(userMessage)]);
-
+      print('here1');
       // Add the user's message to the history.
       history.add(content);
 
@@ -206,8 +218,11 @@ class ChatController extends GetxController {
       // Use the `history` argument in `generateContent`.
       final response = await aiModel
           .generateContent(history.toList()); // Convert RxList to List
+      print('here2');
 
       if (response != null && response.text != null) {
+        // print('here3');
+
         // Process the response
         String aiResponse = response.text!;
 
@@ -222,6 +237,8 @@ class ChatController extends GetxController {
         messages.add(Message(text: aiResponse, type: MessageType.ai));
         update(); //update UI
       } else {
+        // print('here4');
+
         // Handle no response or null text
         messages.add(Message(
             text: 'AI returned an empty response.', type: MessageType.note));
