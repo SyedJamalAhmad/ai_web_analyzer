@@ -87,6 +87,7 @@ class PdfMergeController extends GetxController {
     await mergedFile!.writeAsBytes(pdfData);
     isLoading.value = false;
     isgenerated.value = true;
+    print(mergedFile);
     // final dir = await getApplicationDocumentsDirectory();
     // final mergedFile = File('${dir.path}/merged_output.pdf');
     // await mergedFile.writeAsBytes(mergedPdfData);
@@ -123,12 +124,16 @@ class PdfMergeController extends GetxController {
   // }
   Future<void> saveMergedFile(BuildContext context) async {
     if (mergedFile == null) return;
+    // print('mergedllFile');
 
-    String originalName = basename(selectedFile!.path);
-    String defaultName = 'compressed_$originalName';
+    // String originalName = basename(selectedFile!.path);
+    String defaultName =
+        'MergedPDF${DateTime.now().millisecondsSinceEpoch}.pdf';
+    // print('mergedlFile');
 
     TextEditingController nameController =
         TextEditingController(text: defaultName);
+    // print('mergedFile');
 
     String? fileName = await showDialog<String>(
       context: context,

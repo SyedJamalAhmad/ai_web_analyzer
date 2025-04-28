@@ -260,8 +260,10 @@ class PdfMergeView extends GetView<PdfMergeController> {
                                           const SizedBox(height: 4),
                                           const SizedBox(height: 24),
                                           InkWell(
-                                            onTap: () => controller
-                                                .saveMergedFile(context),
+                                            onTap: () {
+                                              controller
+                                                  .saveMergedFile(context);
+                                            },
                                             child: Container(
                                               decoration: BoxDecoration(
                                                   color: Colors.blue,
