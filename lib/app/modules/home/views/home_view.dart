@@ -1,4 +1,6 @@
 import 'package:ai_web_analyzer/app/models/pdf_handler.dart';
+import 'package:ai_web_analyzer/app/routes/app_pages.dart';
+import 'package:ai_web_analyzer/operation_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -223,7 +225,7 @@ class HomeView extends GetView<HomeViewCTL> {
                 // const SizedBox(height: 20),
 
                 // Features Section
-                const Padding(
+                Padding(
                   padding: EdgeInsets.all(20.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -260,6 +262,23 @@ class HomeView extends GetView<HomeViewCTL> {
                       //   description:
                       //       'Your data is safe with our encrypted processes.',
                       // ),
+                      Column(
+                        children: [
+                          ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: _operations.length,
+                            itemBuilder: (context, index) {
+                              final operation = _operations[index];
+                              return OperationCard(
+                                operation: operation,
+                                onTap: () => Get.toNamed(operation.route),
+                                // onTap: () => _navigateToScreen(context, operation.route),
+                              );
+                            },
+                          ),
+                        ],
+                      )
                     ],
                   ),
                 ),
@@ -394,3 +413,69 @@ class FeatureCard extends StatelessWidget {
     );
   }
 }
+
+final List<PdfOperation> _operations = [
+  // PdfOperation(
+  //   id: 'mine',
+  //   name: 'PDF Mine',
+  //   description: 'Extract metadata and details from your PDF document',
+  //   iconName: 'info',
+  //   route: 'mine',
+  // ),
+  PdfOperation(
+    id: 'pdf_info',
+    name: 'PDF Information',
+    description: 'Extract metadata and details from your PDF document',
+    iconName: 'info',
+    route: Routes.PDF_INFO,
+  ),
+  PdfOperation(
+    id: 'pdf_merge',
+    name: 'Merge PDFs',
+    description: 'Combine multiple PDF files into a single document',
+    iconName: 'merge',
+    route: Routes.PDF_MERGE,
+  ),
+  // PdfOperation(
+  //   id: 'pdf_split',
+  //   name: 'Split PDF',
+  //   description: 'Split a PDF into individual pages or custom ranges',
+  //   iconName: 'split',
+  //   route: 'pdf_split',
+  // ),
+  // PdfOperation(
+  //   id: 'pdf_extract',
+  //   name: 'Extract Pages',
+  //   description: 'Extract specific pages from a PDF document',
+  //   iconName: 'extract',
+  //   route: 'pdf_extract',
+  // ),
+  // PdfOperation(
+  //   id: 'pdf_rotate',
+  //   name: 'Rotate Pages',
+  //   description: 'Rotate specific pages in your PDF document',
+  //   iconName: 'rotate',
+  //   route: 'pdf_rotate',
+  // ),
+  PdfOperation(
+    id: 'pdf_compress',
+    name: 'Compress PDF',
+    description: 'Reduce PDF file size while preserving quality',
+    iconName: 'compress',
+    route: Routes.PDF_COMPRESS,
+  ),
+  // PdfOperation(
+  //   id: 'pdf_to_word',
+  //   name: 'PDF to Word',
+  //   description: 'Convert PDF documents to editable Word format',
+  //   iconName: 'convert_word',
+  //   route: 'pdf_to_word',
+  // ),
+  // PdfOperation(
+  //   id: 'docx_to_pdf',
+  //   name: 'Word to PDF',
+  //   description: 'Convert Word documents to PDF format',
+  //   iconName: 'convert_pdf',
+  //   route: 'docx_to_pdf',
+  // ),
+];
