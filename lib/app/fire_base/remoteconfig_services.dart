@@ -45,8 +45,9 @@ class RemoteConfigService {
       await remoteConfig.setDefaults(const {
         "apiKey": "AIzaSyAMqyKN3V21hNVLqYwpMBhVb2aZ2Yi0Jn4",
         "geminiModel": "gemini-2.0-flash",
+        "clientId": "e87dc9666cb6458f93a32c0a0f1b6b2c",
+        "clientSecret": "p8e-LslOqh8kKl8F0KbxfYOrtHe2VfW_18sA",
       });
-
       await remoteConfig.fetchAndActivate();
     } on Exception catch (e) {
       // TODO
@@ -58,5 +59,7 @@ class RemoteConfigService {
     dp.log("these are rc vaiables ${remoteConfig.getString('apiKey')}");
     RCVariables.apiKey = remoteConfig.getString('apiKey');
     RCVariables.geminiModel = remoteConfig.getString('geminiModel');
+    RCVariables.clientId = remoteConfig.getString('clientId');
+    RCVariables.clientSecret = remoteConfig.getString('clientSecret');
   }
 }

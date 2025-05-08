@@ -16,7 +16,7 @@ class OperationCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 4,
-      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: InkWell(
         onTap: onTap,
         // borderRadius: BorderRadius.circular(15),
@@ -72,7 +72,7 @@ class OperationCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 12),
                 Text(
                   operation.description,
                   // style: Theme.of(context).textTheme.bodyMedium?.copyWith(

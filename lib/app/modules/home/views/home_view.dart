@@ -1,5 +1,6 @@
 import 'package:ai_web_analyzer/app/models/pdf_handler.dart';
 import 'package:ai_web_analyzer/app/routes/app_pages.dart';
+import 'package:ai_web_analyzer/app/routes/app_pages.dart';
 import 'package:ai_web_analyzer/operation_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -50,7 +51,7 @@ class HomeView extends GetView<HomeViewCTL> {
               children: [
                 // Hero Section
                 Container(
-                  height: MediaQuery.of(context).size.height * 0.6,
+                  height: MediaQuery.of(context).size.height * 0.45,
                   decoration: const BoxDecoration(
                     gradient: LinearGradient(
                       colors: [Color(0xFF1A73E8), Color(0xFF6C5CE7)],
@@ -226,58 +227,111 @@ class HomeView extends GetView<HomeViewCTL> {
 
                 // Features Section
                 Padding(
-                  padding: EdgeInsets.all(20.0),
+                  padding: EdgeInsets.all(16.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'More Features:',
-                        style: TextStyle(
-                            fontSize: 20,
-                            // color: Color(0xFF1A73E8),
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(height: 20),
-
+                      // Text(
+                      //   'More Features:',
+                      //   style: TextStyle(
+                      //       fontSize: 20,
+                      //       // color: Color(0xFF1A73E8),
+                      //       color: Colors.black,
+                      //       fontWeight: FontWeight.bold),
+                      // ),
+                      // SizedBox(height: 20),
                       FeatureCard(
                         title: 'AI PDF Assistant',
                         description:
                             'AI powered PDF reader that helps you summarize, extract key insights, and get answers instantly.',
                       ),
-                      // FeatureCard(
-                      //   title: 'Fast & Accurate',
-                      //   description:
-                      //       'Get precise data in seconds with our AI algorithms.',
-                      // ),
-                      // SizedBox(height: 20),
-                      // FeatureCard(
-                      //   title: 'Easy to Use',
-                      //   description:
-                      //       'No technical skills required. Just paste the URL and go!',
-                      // ),
-                      // SizedBox(height: 20),
-                      // FeatureCard(
-                      //   title: 'Secure & Reliable',
-                      //   description:
-                      //       'Your data is safe with our encrypted processes.',
-                      // ),
-                      Column(
-                        children: [
-                          ListView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: _operations.length,
-                            itemBuilder: (context, index) {
-                              final operation = _operations[index];
-                              return OperationCard(
-                                operation: operation,
-                                onTap: () => Get.toNamed(operation.route),
-                                // onTap: () => _navigateToScreen(context, operation.route),
-                              );
-                            },
+                 
+                      Card(
+                        elevation: 4,
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 8),
+                        child: InkWell(
+                          onTap: () {
+                            Get.toNamed(Routes.PDF_OPERATIONS);
+                          },
+                          // borderRadius: BorderRadius.circular(15),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [Colors.blue.shade50, Colors.white],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                              ),
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(
+                                  color: Colors.blue.shade100, width: 1),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Container(
+                                        padding: const EdgeInsets.all(12),
+                                        decoration: BoxDecoration(
+                                          color: Colors.blue.shade800,
+                                          // color: Theme.of(context).colorScheme.primaryContainer,
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                        ),
+                                        child: Icon(
+                                          // _getIconData(operation.iconName),
+                                          Icons.picture_as_pdf,
+                                          // color: Theme.of(context).colorScheme.primary,
+                                          color: Colors.white,
+                                          size: 24,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 16),
+                                      Expanded(
+                                        child: Text(
+                                          // operation.name,
+                                          'More Pdf Operations',
+                                          // style:
+                                          //     Theme.of(context).textTheme.titleMedium?.copyWith(
+                                          //           fontWeight: FontWeight.bold,
+                                          //         ),
+                                          style: TextStyle(
+                                              color: Colors.blue.shade800,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 18),
+                                        ),
+                                      ),
+                                      Icon(
+                                        Icons.arrow_forward_ios,
+                                        size: 16,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSurfaceVariant,
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 16),
+                                  Text(
+                                    // operation.description,
+                                    'Manipulate and convert PDF with advance PDF Tools',
+                                    // style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                    //       color: Theme.of(context).colorScheme.onSurfaceVariant,
+                                    //     ),
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.grey.shade700,
+                                      fontFamily: 'Roboto',
+                                      height: 1.5,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
-                        ],
+                        ),
                       )
                     ],
                   ),
@@ -336,7 +390,7 @@ class FeatureCard extends StatelessWidget {
           border: Border.all(color: Colors.blue.shade100, width: 1),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -359,17 +413,17 @@ class FeatureCard extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 8),
               Text(
                 description,
                 style: TextStyle(
                   fontSize: 14,
                   color: Colors.grey.shade700,
                   fontFamily: 'Roboto',
-                  height: 1.5,
+                  // height: 1.,
                 ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 8),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -413,69 +467,3 @@ class FeatureCard extends StatelessWidget {
     );
   }
 }
-
-final List<PdfOperation> _operations = [
-  // PdfOperation(
-  //   id: 'mine',
-  //   name: 'PDF Mine',
-  //   description: 'Extract metadata and details from your PDF document',
-  //   iconName: 'info',
-  //   route: 'mine',
-  // ),
-  PdfOperation(
-    id: 'pdf_info',
-    name: 'PDF Information',
-    description: 'Extract metadata and details from your PDF document',
-    iconName: 'info',
-    route: Routes.PDF_INFO,
-  ),
-  PdfOperation(
-    id: 'pdf_merge',
-    name: 'Merge PDFs',
-    description: 'Combine multiple PDF files into a single document',
-    iconName: 'merge',
-    route: Routes.PDF_MERGE,
-  ),
-  // PdfOperation(
-  //   id: 'pdf_split',
-  //   name: 'Split PDF',
-  //   description: 'Split a PDF into individual pages or custom ranges',
-  //   iconName: 'split',
-  //   route: 'pdf_split',
-  // ),
-  // PdfOperation(
-  //   id: 'pdf_extract',
-  //   name: 'Extract Pages',
-  //   description: 'Extract specific pages from a PDF document',
-  //   iconName: 'extract',
-  //   route: 'pdf_extract',
-  // ),
-  // PdfOperation(
-  //   id: 'pdf_rotate',
-  //   name: 'Rotate Pages',
-  //   description: 'Rotate specific pages in your PDF document',
-  //   iconName: 'rotate',
-  //   route: 'pdf_rotate',
-  // ),
-  PdfOperation(
-    id: 'pdf_compress',
-    name: 'Compress PDF',
-    description: 'Reduce PDF file size while preserving quality',
-    iconName: 'compress',
-    route: Routes.PDF_COMPRESS,
-  ),
-  // PdfOperation(
-  //   id: 'pdf_to_word',
-  //   name: 'PDF to Word',
-  //   description: 'Convert PDF documents to editable Word format',
-  //   iconName: 'convert_word',
-  //   route: 'pdf_to_word',
-  // ),
-  // PdfOperation(
-  //   id: 'docx_to_pdf',
-  //   name: 'Word to PDF',
-  //   description: 'Convert Word documents to PDF format',
-  //   iconName: 'convert_pdf',
-  //   route: 'docx_to_pdf',
-  // ),
-];
