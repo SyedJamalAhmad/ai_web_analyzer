@@ -27,15 +27,18 @@ class URLView extends GetView<URLViewCTL> {
                 color: Colors.white,
               ),
             ),
-            
+
             leading: GestureDetector(
-              onTap: (){
-                Get.back();
-              },
-              child: Icon(Icons.arrow_back_ios_new_rounded,color: Colors.white,)),
+                onTap: () {
+                  Get.back();
+                },
+                child: Icon(
+                  Icons.arrow_back_ios_new_rounded,
+                  color: Colors.white,
+                )),
             elevation: 0,
             centerTitle: true,
-            backgroundColor: const Color(0xFF1A73E8), // Your Color
+            backgroundColor: Colors.red.shade900, // Your Color
             bottom: const TabBar(
               indicatorColor: Colors.white, // White Indicator
               indicatorWeight: 3.0, // Modern Look

@@ -16,6 +16,7 @@ abstract class Routes {
   static const PDF_MERGE = _Paths.PDF_MERGE;
   static const PDF_COMPRESS = _Paths.PDF_COMPRESS;
   static const PDF_OPERATIONS = _Paths.PDF_OPERATIONS;
+  static const PDFSCANNER = _Paths.PDFSCANNER;
 }
 
 abstract class _Paths {
@@ -31,4 +32,5 @@ abstract class _Paths {
   static const PDF_MERGE = '/pdf-merge';
   static const PDF_COMPRESS = '/pdf-compress';
   static const PDF_OPERATIONS = '/pdf-operations';
+  static const PDFSCANNER = '/pdfscanner';
 }

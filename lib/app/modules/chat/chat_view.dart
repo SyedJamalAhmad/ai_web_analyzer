@@ -343,14 +343,14 @@ class ChatView extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 5),
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
-                        colors: [Colors.blue.shade600, Colors.blue.shade400],
+                        colors: [Colors.red.shade700, Colors.red.shade400],
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
                       ),
                       shape: BoxShape.circle,
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.blue.withOpacity(0.3),
+                          color: Colors.red.withOpacity(0.3),
                           blurRadius: 5,
                           offset: const Offset(0, 2),
                         ),

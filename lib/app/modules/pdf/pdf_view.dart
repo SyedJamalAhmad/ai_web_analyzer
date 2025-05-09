@@ -26,7 +26,7 @@
 
 //     return Scaffold(
 //       appBar: AppBar(
-//         backgroundColor: Color(0xFF1A73E8),
+//         backgroundColor: Colors.red.shade900,
 //         title: Text("PDF Viewer",style: TextStyle(
 //           fontSize: SizeConfig.blockSizeHorizontal * 5,
 //           fontWeight: FontWeight.bold,
@@ -123,7 +123,7 @@ class _PDFViewState extends State<PDFView> {
                 color: Colors.white,
               )),
           elevation: 0,
-          backgroundColor: const Color(0xFF1A73E8), // Your Color
+          backgroundColor: Colors.red.shade900, // Your Color
           bottom: const TabBar(
             indicatorColor: Colors.white, // White Indicator
             indicatorWeight: 3.0, // Modern Look
