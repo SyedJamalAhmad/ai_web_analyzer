@@ -4,6 +4,7 @@ import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -52,50 +53,90 @@ class PdfCompressController extends GetxController {
   }
 
   Future<void> compressPdf() async {
+    try {
+      // print('connectivity');
+
+      final connectivity = await Connectivity().checkConnectivity();
+      // print(connectivity);
+      // print(connectivity.length);
+      // print(connectivity[0]);
+      if (connectivity[0] == ConnectivityResult.none) {
+        // print('failed');
+        Get.snackbar('No Internet Connection',
+            'Please Check your Internet Connectionand try again');
+        // errorTitle = 'No Internet Connection';
+        // errorString = 'Please Check Your Internet Connection and try again';
+        // throw 'No internet connection';
+        // throw ('wewe');
+        return;
+      }
+    } catch (e) {
+      Get.snackbar('No Internet Connection',
+          'Please Check your Internet Connectionand try again');
+      // print(e);
+      return;
+    }
     isLoading.value = true;
     isInfoGotten.value = false;
     if (selectedFile == null) return;
-    isLoading.value = true;
-    Dio dio = Dio();
+    try {
+      isLoading.value = true;
+      Dio dio = Dio(BaseOptions(
+        connectTimeout: const Duration(seconds: 60),
+        receiveTimeout: const Duration(seconds: 60),
+      ));
 
-    String fileName = basename(selectedFile!.path);
-    FormData formData = FormData.fromMap({
-      'file': await MultipartFile.fromFile(
-        selectedFile!.path,
-        filename: fileName,
-        contentType: MediaType('application', 'pdf'),
-      ),
-      'imageCompression': 'maximum',
-    });
+      String fileName = basename(selectedFile!.path);
+      FormData formData = FormData.fromMap({
+        'file': await MultipartFile.fromFile(
+          selectedFile!.path,
+          filename: fileName,
+          contentType: MediaType('application', 'pdf'),
+        ),
+        'imageCompression': 'maximum',
+      });
 
-    Response response = await dio.post(
-      'http://165.227.96.78:3001/api/pdf/compress',
-      data: formData,
-      options: Options(
-        responseType: ResponseType.bytes,
-        headers: {'Accept': 'application/pdf'},
-      ),
-    );
+      Response response = await dio.post(
+        'http://165.227.96.78:3001/api/pdf/compress',
+        data: formData,
+        options: Options(
+          responseType: ResponseType.bytes,
+          headers: {'Accept': 'application/pdf'},
+        ),
+      );
 
-    Uint8List pdfData = Uint8List.fromList(response.data);
-    final dir = await getApplicationDocumentsDirectory();
-    compressedFile = File('${dir.path}/compressed_${fileName}');
-    await compressedFile!.writeAsBytes(pdfData);
+      Uint8List pdfData = Uint8List.fromList(response.data);
+      final dir = await getApplicationDocumentsDirectory();
+      compressedFile = File('${dir.path}/compressed_${fileName}');
+      await compressedFile!.writeAsBytes(pdfData);
 
-    compressedSize = compressedFile!.lengthSync().toDouble();
-    reductionPercentage.value =
-        ((originalSize - compressedSize) / originalSize) * 100;
-    isLoading.value = false;
-    
-    isInfoGotten.value = true;
-    update();
+      compressedSize = compressedFile!.lengthSync().toDouble();
+      reductionPercentage.value =
+          ((originalSize - compressedSize) / originalSize) * 100;
+      isInfoGotten.value = true;
+    } on DioException catch (e) {
+      if (e.type == DioExceptionType.receiveTimeout ||
+          e.type == DioExceptionType.connectionTimeout) {
+        Get.snackbar('Timeout Error',
+            'Server did not respond in time. Please try again.');
+      } else {
+        Get.snackbar('Error', 'Failed to compress PDF: ${e.message}');
+      }
+    } catch (e) {
+      Get.snackbar('Unexpected Error', e.toString());
+    } finally {
+      isLoading.value = false;
+      update();
+    }
   }
 
   Future<void> saveCompressedFile(BuildContext context) async {
     if (compressedFile == null) return;
 
     String originalName = basename(selectedFile!.path);
-    String defaultName = 'compressed_$originalName';
+    String defaultName =
+        'CompressedPDF${DateTime.now().millisecondsSinceEpoch}.pdf';
+    // String defaultName = 'compressed_$originalName';
 
     TextEditingController nameController =
         TextEditingController(text: defaultName);

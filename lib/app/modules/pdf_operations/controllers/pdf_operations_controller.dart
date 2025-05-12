@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:ai_web_analyzer/app/routes/app_pages.dart';
 import 'package:ai_web_analyzer/app/utills/remoteconfig_variables.dart';
 import 'package:ai_web_analyzer/operation_card.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,6 +18,30 @@ class PdfOperationsController extends GetxController {
   String? ext;
   RxBool isgenerating = false.obs;
   pdfConverter() async {
+    // Check connectivity
+    // var connectivity;
+    try {
+      // print('connectivity');
+
+      final connectivity = await Connectivity().checkConnectivity();
+      // print(connectivity);
+      // print(connectivity.length);
+      // print(connectivity[0]);
+      if (connectivity[0] == ConnectivityResult.none) {
+        // print('failed');
+        Get.snackbar('No Internet Connection',
+            'Please Check your Internet Connectionand try again');
+        // errorTitle = 'No Internet Connection';
+        // errorString = 'Please Check Your Internet Connection and try again';
+        // throw 'No internet connection';
+        // throw ('wewe');
+        return;
+      }
+    } catch (e) {
+      print(e);
+      // return;
+    }
+
     isgenerating.value = true;
     if (!await pickfile()) {
       isgenerating.value = false;

@@ -23,12 +23,12 @@ class OperationCard extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [Colors.blue.shade50, Colors.white],
+              colors: [Colors.red.shade50, Colors.white],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: Colors.blue.shade100, width: 1),
+            border: Border.all(color: Colors.red.shade700, width: 1),
           ),
           child: Padding(
             padding: const EdgeInsets.all(16.0),
@@ -40,7 +40,7 @@ class OperationCard extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        color: Colors.blue.shade800,
+                        color: Colors.red.shade800,
                         // color: Theme.of(context).colorScheme.primaryContainer,
                         borderRadius: BorderRadius.circular(12),
                       ),
@@ -60,7 +60,7 @@ class OperationCard extends StatelessWidget {
                         //           fontWeight: FontWeight.bold,
                         //         ),
                         style: TextStyle(
-                            color: Colors.blue.shade800,
+                            color: Colors.red.shade800,
                             fontWeight: FontWeight.bold,
                             fontSize: 18),
                       ),

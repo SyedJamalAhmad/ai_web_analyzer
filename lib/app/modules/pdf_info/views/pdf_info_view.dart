@@ -44,7 +44,7 @@ class PdfInfoView extends GetView<PdfInfoController> {
           ),
           centerTitle: true,
           elevation: 0,
-          backgroundColor: Color(0xFF1A73E8),
+          backgroundColor: Colors.red.shade700,
         ),
         body: SingleChildScrollView(
           child: GetBuilder<PdfInfoController>(
@@ -55,19 +55,20 @@ class PdfInfoView extends GetView<PdfInfoController> {
                       children: [
                         Card(
                           elevation: 2,
+                          color: Colors.transparent,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Container(
                             decoration: BoxDecoration(
                               gradient: LinearGradient(
-                                colors: [Colors.blue.shade50, Colors.white],
+                                colors: [Colors.red.shade50, Colors.white],
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight,
                               ),
                               borderRadius: BorderRadius.circular(15),
                               border: Border.all(
-                                  color: Colors.blue.shade100, width: 1),
+                                  color: Colors.red.shade100, width: 1),
                             ),
                             child: Padding(
                               padding: const EdgeInsets.all(16.0),
@@ -80,7 +81,7 @@ class PdfInfoView extends GetView<PdfInfoController> {
                                     onTap: () => controller.pickFile(),
                                     child: Container(
                                       decoration: BoxDecoration(
-                                          color: Colors.blue,
+                                          color: Colors.red,
                                           borderRadius:
                                               BorderRadius.circular(16),
                                           boxShadow: [
@@ -206,6 +207,7 @@ class PdfInfoView extends GetView<PdfInfoController> {
 
                           if (controller.isgenerated.value) {
                             return Card(
+                              color: Colors.transparent,
                               elevation: 2,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),
@@ -213,13 +215,13 @@ class PdfInfoView extends GetView<PdfInfoController> {
                               child: Container(
                                 decoration: BoxDecoration(
                                   gradient: LinearGradient(
-                                    colors: [Colors.blue.shade50, Colors.white],
+                                    colors: [Colors.red.shade50, Colors.white],
                                     begin: Alignment.topLeft,
                                     end: Alignment.bottomRight,
                                   ),
                                   borderRadius: BorderRadius.circular(15),
                                   border: Border.all(
-                                      color: Colors.blue.shade100, width: 1),
+                                      color: Colors.red.shade100, width: 1),
                                 ),
                                 child: Padding(
                                   padding: const EdgeInsets.all(16.0),
@@ -249,7 +251,7 @@ class PdfInfoView extends GetView<PdfInfoController> {
         infoCard('Producer', pdfInfo.value.producer),
         infoCard('Number of Pages', pdfInfo.value.pageCount.toString()),
         infoCard('FileSize', pdfInfo.value.fileSize),
-        infoCard('Text Content', pdfInfo.value.textContent),
+        // infoCard('Text Content', pdfInfo.value.textContent),
       ],
     );
   }

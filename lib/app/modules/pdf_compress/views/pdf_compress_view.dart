@@ -25,7 +25,7 @@ class PdfCompressView extends GetView<PdfCompressController> {
         ),
         centerTitle: true,
         elevation: 0,
-        backgroundColor: Color(0xFF1A73E8),
+        backgroundColor: Colors.red.shade700,
       ),
       body: GetBuilder<PdfCompressController>(
         builder: (controller) => Padding(
@@ -42,12 +42,12 @@ class PdfCompressView extends GetView<PdfCompressController> {
                 child: Container(
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      colors: [Colors.blue.shade50, Colors.white],
+                      colors: [Colors.red.shade50, Colors.white],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),
                     borderRadius: BorderRadius.circular(15),
-                    border: Border.all(color: Colors.blue.shade100, width: 1),
+                    border: Border.all(color: Colors.red.shade100, width: 1),
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
@@ -60,7 +60,7 @@ class PdfCompressView extends GetView<PdfCompressController> {
                           onTap: () => controller.pickFile(),
                           child: Container(
                             decoration: BoxDecoration(
-                                color: Colors.blue,
+                                color: Colors.red,
                                 borderRadius: BorderRadius.circular(16),
                                 boxShadow: [
                                   BoxShadow(
@@ -151,17 +151,14 @@ class PdfCompressView extends GetView<PdfCompressController> {
                     ),
                     child: Container(
                       decoration: BoxDecoration(
-
-
-                        
                         gradient: LinearGradient(
-                          colors: [Colors.blue.shade50, Colors.white],
+                          colors: [Colors.red.shade50, Colors.white],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                         ),
                         borderRadius: BorderRadius.circular(15),
                         border:
-                            Border.all(color: Colors.blue.shade100, width: 1),
+                            Border.all(color: Colors.red.shade100, width: 1),
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(16.0),
@@ -243,7 +240,7 @@ class PdfCompressView extends GetView<PdfCompressController> {
                                   controller.saveCompressedFile(context),
                               child: Container(
                                 decoration: BoxDecoration(
-                                    color: Colors.blue,
+                                    color: Colors.red,
                                     borderRadius: BorderRadius.circular(16),
                                     boxShadow: [
                                       BoxShadow(
