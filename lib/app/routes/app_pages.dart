@@ -14,6 +14,8 @@ import '../modules/pdf_merge/bindings/pdf_merge_binding.dart';
 import '../modules/pdf_merge/views/pdf_merge_view.dart';
 import '../modules/pdf_operations/bindings/pdf_operations_binding.dart';
 import '../modules/pdf_operations/views/pdf_operations_view.dart';
+import '../modules/pdfscanner/bindings/pdfscanner_binding.dart';
+import '../modules/pdfscanner/views/pdfscanner_view.dart';
 import '../modules/url/url_view.dart';
 import '../modules/url/url_view_binding.dart';
 import '../modules/webview/web_view.dart';
@@ -93,6 +95,11 @@ class AppPages {
       name: _Paths.PDF_OPERATIONS,
       page: () => const PdfOperationsView(),
       binding: PdfOperationsBinding(),
+    ),
+    GetPage(
+      name: _Paths.PDFSCANNER,
+      page: () => const PdfscannerView(),
+      binding: PdfscannerBinding(),
     ),
   ];
 }

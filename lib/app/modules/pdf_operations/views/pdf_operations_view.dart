@@ -26,7 +26,7 @@ class PdfOperationsView extends GetView<PdfOperationsController> {
         ),
         centerTitle: true,
         elevation: 0,
-        backgroundColor: Color(0xFF1A73E8),
+        backgroundColor: Colors.red.shade700,
       ),
       body: Stack(
         children: [
@@ -35,117 +35,117 @@ class PdfOperationsView extends GetView<PdfOperationsController> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               SizedBox(height: 12),
-              Card(
-                elevation: 4,
-                margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                child: InkWell(
-                  onTap: () {
-                    // Get.toNamed(Routes.PDF_OPERATIONS);
-                    controller.pdfConverter();
-                  },
-                  // borderRadius: BorderRadius.circular(15),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [Colors.red.shade50, Colors.white],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: Colors.red.shade900, width: 1),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              //   Container(
-                              //     padding: const EdgeInsets.all(12),
-                              //     decoration: BoxDecoration(
-                              //       color: Colors.red.shade800,
-                              //       // color: Theme.of(context).colorScheme.primaryContainer,
-                              //       borderRadius: BorderRadius.circular(12),
-                              //     ),
-                              //     child: Icon(
-                              //       // _getIconData(operation.iconName),
-                              //       Icons.picture_as_pdf,
-                              //       // color: Theme.of(context).colorScheme.primary,
-                              //       color: Colors.white,
-                              //       size: 24,
-                              //     ),
-                              //   ),
+              // Card(
+              //   elevation: 4,
+              //   margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              //   child: InkWell(
+              //     onTap: () {
+              //       // Get.toNamed(Routes.PDF_OPERATIONS);
+              //       controller.pdfConverter();
+              //     },
+              //     // borderRadius: BorderRadius.circular(15),
+              //     child: Container(
+              //       decoration: BoxDecoration(
+              //         gradient: LinearGradient(
+              //           colors: [Colors.red.shade50, Colors.white],
+              //           begin: Alignment.topLeft,
+              //           end: Alignment.bottomRight,
+              //         ),
+              //         borderRadius: BorderRadius.circular(12),
+              //         border: Border.all(color: Colors.red.shade900, width: 1),
+              //       ),
+              //       child: Padding(
+              //         padding: const EdgeInsets.all(16.0),
+              //         child: Column(
+              //           crossAxisAlignment: CrossAxisAlignment.start,
+              //           children: [
+              //             Row(
+              //               children: [
+              //                 //   Container(
+              //                 //     padding: const EdgeInsets.all(12),
+              //                 //     decoration: BoxDecoration(
+              //                 //       color: Colors.red.shade800,
+              //                 //       // color: Theme.of(context).colorScheme.primaryContainer,
+              //                 //       borderRadius: BorderRadius.circular(12),
+              //                 //     ),
+              //                 //     child: Icon(
+              //                 //       // _getIconData(operation.iconName),
+              //                 //       Icons.picture_as_pdf,
+              //                 //       // color: Theme.of(context).colorScheme.primary,
+              //                 //       color: Colors.white,
+              //                 //       size: 24,
+              //                 //     ),
+              //                 //   ),
 
-                              Expanded(
-                                child: Text(
-                                  // operation.name,
-                                  'PDF Converter',
-                                  // style:
-                                  //     Theme.of(context).textTheme.titleMedium?.copyWith(
-                                  //           fontWeight: FontWeight.bold,
-                                  //         ),
-                                  style: TextStyle(
-                                      color: Colors.red.shade800,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18),
-                                ),
-                              ),
-                              Icon(
-                                Icons.picture_as_pdf,
-                                color: Colors.red.shade800,
-                                size: 28,
-                              ),
-                              Icon(
-                                Icons.arrow_forward,
-                                color: Colors.red.shade800,
-                                size: 28,
-                              ),
-                              Icon(
-                                Icons.save_rounded,
-                                color: Colors.red.shade800,
-                                size: 28,
-                              ),
-                              const SizedBox(width: 16),
+              //                 Expanded(
+              //                   child: Text(
+              //                     // operation.name,
+              //                     'PDF Converter',
+              //                     // style:
+              //                     //     Theme.of(context).textTheme.titleMedium?.copyWith(
+              //                     //           fontWeight: FontWeight.bold,
+              //                     //         ),
+              //                     style: TextStyle(
+              //                         color: Colors.red.shade800,
+              //                         fontWeight: FontWeight.bold,
+              //                         fontSize: 18),
+              //                   ),
+              //                 ),
+              //                 Icon(
+              //                   Icons.picture_as_pdf,
+              //                   color: Colors.red.shade800,
+              //                   size: 28,
+              //                 ),
+              //                 Icon(
+              //                   Icons.arrow_forward,
+              //                   color: Colors.red.shade800,
+              //                   size: 28,
+              //                 ),
+              //                 Icon(
+              //                   Icons.save_rounded,
+              //                   color: Colors.red.shade800,
+              //                   size: 28,
+              //                 ),
+              //                 const SizedBox(width: 16),
 
-                              // Icon(
-                              //   Icons.arrow_forward_ios,
-                              //   size: 16,
-                              //   color:
-                              //       Theme.of(context).colorScheme.onSurfaceVariant,
-                              // ),
-                            ],
-                          ),
-                          const SizedBox(height: 16),
-                          // Row(
-                          //   mainAxisAlignment: MainAxisAlignment.center,
-                          //   children: [
-                          //   ],
-                          // ),
-                          // const SizedBox(height: 16),
-                          Text(
-                            // operation.description,
-                            'Convert your PDF into Word, Excel, PowerPoint, and more.',
-                            // style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            //       color: Theme.of(context).colorScheme.onSurfaceVariant,
-                            //     ),
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.grey.shade700,
-                              fontFamily: 'Roboto',
-                              height: 1.5,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Divider(
-                indent: 26,
-                endIndent: 26,
-              ),
+              //                 // Icon(
+              //                 //   Icons.arrow_forward_ios,
+              //                 //   size: 16,
+              //                 //   color:
+              //                 //       Theme.of(context).colorScheme.onSurfaceVariant,
+              //                 // ),
+              //               ],
+              //             ),
+              //             const SizedBox(height: 16),
+              //             // Row(
+              //             //   mainAxisAlignment: MainAxisAlignment.center,
+              //             //   children: [
+              //             //   ],
+              //             // ),
+              //             // const SizedBox(height: 16),
+              //             Text(
+              //               // operation.description,
+              //               'Convert your PDF into Word, Excel, PowerPoint, and more.',
+              //               // style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              //               //       color: Theme.of(context).colorScheme.onSurfaceVariant,
+              //               //     ),
+              //               style: TextStyle(
+              //                 fontSize: 14,
+              //                 color: Colors.grey.shade700,
+              //                 fontFamily: 'Roboto',
+              //                 height: 1.5,
+              //               ),
+              //             ),
+              //           ],
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
+              // Divider(
+              //   indent: 26,
+              //   endIndent: 26,
+              // ),
               // Card(
               //   elevation: 4,
               //   margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),

@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:ai_web_analyzer/app/routes/app_pages.dart';
 import 'package:ai_web_analyzer/app/utills/remoteconfig_variables.dart';
 import 'package:ai_web_analyzer/operation_card.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,8 +18,31 @@ class PdfOperationsController extends GetxController {
   String? ext;
   RxBool isgenerating = false.obs;
   pdfConverter() async {
+    // Check connectivity
+    // var connectivity;
+    try {
+      // print('connectivity');
+
+      final connectivity = await Connectivity().checkConnectivity();
+      // print(connectivity);
+      // print(connectivity.length);
+      // print(connectivity[0]);
+      if (connectivity[0] == ConnectivityResult.none) {
+        // print('failed');
+        Get.snackbar('No Internet Connection',
+            'Please Check your Internet Connectionand try again');
+        // errorTitle = 'No Internet Connection';
+        // errorString = 'Please Check Your Internet Connection and try again';
+        // throw 'No internet connection';
+        // throw ('wewe');
+        return;
+      }
+    } catch (e) {
+      print(e);
+      // return;
+    }
+
     isgenerating.value = true;
-    // bool picked= await pickfile();
     if (!await pickfile()) {
       isgenerating.value = false;
 
@@ -40,6 +64,10 @@ class PdfOperationsController extends GetxController {
       type: FileType.custom,
       allowedExtensions: ['pdf'],
     );
+    // final dir = await getApplicationDocumentsDirectory();
+
+    // final dir = result!.files.single.path;
+    // print('Directory is : ${dir.path}');
     if (result == null || result.files.single.path == null) {
       Get.snackbar('No File Selected', 'Please Select a valid file');
       // pdfFile=File
@@ -57,26 +85,56 @@ class PdfOperationsController extends GetxController {
     return Get.dialog<String>(
       AlertDialog(
         title: Text('Convert To'),
-        content: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            _buildIconOption(
-              icon: Icons.description,
-              label: 'Word',
-              color: Colors.blue,
-              value: 'docx',
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                _buildIconOption(
+                  icon: Icons.slideshow,
+                  label: 'PowerPoint',
+                  color: Colors.red.shade700,
+                  value: 'pptx',
+                ),
+                _buildIconOption(
+                  icon: Icons.image,
+                  label: 'Images',
+                  color: Colors.purple,
+                  value: 'jpeg',
+                ),
+              ],
             ),
-            _buildIconOption(
-              icon: Icons.grid_on,
-              label: 'Excel',
-              color: Colors.green,
-              value: 'xlsx',
-            ),
-            _buildIconOption(
-              icon: Icons.slideshow,
-              label: 'PowerPoint',
-              color: Colors.red.shade700,
-              value: 'pptx',
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                _buildIconOption(
+                  icon: Icons.description,
+                  label: 'Word',
+                  color: Colors.blue.shade400,
+                  value: 'docx',
+                ),
+                _buildIconOption(
+                  icon: Icons.grid_on,
+                  label: 'Excel',
+                  color: Colors.green,
+                  value: 'xlsx',
+                ),
+                _buildIconOption(
+                  icon: Icons.text_snippet_outlined,
+                  label: 'RTF',
+                  color: Colors.blue.shade900,
+                  value: 'rtf',
+                ),
+
+                // _buildIconOption(
+                //   icon: Icons.text_fields_outlined,
+                //   label: 'Text',
+                //   color: Colors.black87,
+                //   value: 'txt',
+                // ),
+              ],
             ),
           ],
         ),
@@ -86,14 +144,23 @@ class PdfOperationsController extends GetxController {
 
   String generateConvertedFilePath(String ext) {
     File file = pdfFile!;
+    String newName;
     final originalName = p.basenameWithoutExtension(file.path);
-    final dir = p.dirname(file.path);
+    final dir = '/storage/emulated/0/Download';
+    // final dir = p.dirname(file.path);
+    //  Directory('/storage/emulated/0/Download');
+    print(dir);
     final timestamp = DateTime.now().millisecondsSinceEpoch;
-    final newName = 'converted_${originalName}_$timestamp.$ext';
+    if (ext == 'jpeg') {
+      newName = '${originalName}_${timestamp}IMG';
+    } else {
+      newName = 'converted_${originalName}_$timestamp.$ext';
+    }
     return p.join(dir, newName);
   }
 
-  Future<File?> convertPdf(
+  // Future<File?>
+  Future<void> convertPdf(
       //   {
       //   required File pdfFile,
       //   required String targetFormat,
@@ -139,20 +206,47 @@ class PdfOperationsController extends GetxController {
       );
 
       // 3. Start conversion
+      // final convertResponse = await http.post(
+      //   // Uri.parse('https://pdf-services.adobe.io/operation/pdftoimages'),
+
+      //   Uri.parse('https://pdf-services.adobe.io/operation/pdftoimages'),
+      //   headers: {
+      //     'Authorization': 'Bearer $token',
+      //     'x-api-key': apiKey,
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: jsonEncode({
+      //     'assetID': assetID,
+      //     'targetFormat': ext,
+      //     "outputType": "listOfPageImages"
+      //     // "outputType": "zipOfPageImages"
+      //   }),
+      // );
+      // print(ext);
+
       final convertResponse = await http.post(
         // Uri.parse('https://pdf-services.adobe.io/operation/pdftoimages'),
-        Uri.parse('https://pdf-services.adobe.io/operation/exportpdf'),
+        ext != 'jpeg'
+            ? Uri.parse('https://pdf-services.adobe.io/operation/exportpdf')
+            : Uri.parse('https://pdf-services.adobe.io/operation/pdftoimages'),
         headers: {
           'Authorization': 'Bearer $token',
           'x-api-key': apiKey,
           'Content-Type': 'application/json',
         },
-        body: jsonEncode({
-          'assetID': assetID,
-          'targetFormat': ext,
-          // "outputType": "ListOfPageImages"
-          // "outputType": "zipOfPageImages"
-        }),
+        body: ext == 'jpeg'
+            ? jsonEncode({
+                'assetID': assetID,
+                'targetFormat': ext,
+                "outputType": "listOfPageImages"
+                // "outputType": "zipOfPageImages"
+              })
+            : jsonEncode({
+                'assetID': assetID,
+                'targetFormat': ext,
+                // "outputType": "ListOfPageImages"
+                // "outputType": "zipOfPageImages"
+              }),
       );
       print('statusCheck.statusCode');
       print(convertResponse.statusCode);
@@ -164,7 +258,7 @@ class PdfOperationsController extends GetxController {
       if (location == null) throw Exception('No status location provided');
 
       // 4. Poll for conversion result
-      String? downloadUri;
+      List<String> downloadUri = [];
       while (true) {
         await Future.delayed(Duration(seconds: 2));
         final statusCheck = await http.get(
@@ -179,7 +273,14 @@ class PdfOperationsController extends GetxController {
         // print(statusCheck.headers);
         final statusJson = jsonDecode(statusCheck.body);
         if (statusJson['status'] == 'done') {
-          downloadUri = statusJson['asset']['downloadUri'];
+          if (ext != 'jpeg') {
+            downloadUri = [statusJson['asset']['downloadUri']];
+          } else {
+            // downloadUri = statusJson['assetList'][0]['downloadUri'];
+            for (var asset in statusJson['assetList']) {
+              downloadUri.add(asset['downloadUri']);
+            }
+          }
           // downloadUri = statusJson['assetList'][0]['downloadUri'];
           break;
         } else if (statusJson['status'] == 'failed') {
@@ -188,23 +289,51 @@ class PdfOperationsController extends GetxController {
       }
 
       // 5. Download and save
-      final resultResponse = await http.get(Uri.parse(downloadUri!));
-      final directory = await getApplicationDocumentsDirectory();
-      final file = File(path!);
-      // final file = File('${directory.path}/$outputFileName');
-      await file.writeAsBytes(resultResponse.bodyBytes);
-      print('File saved: ${file.path}');
-      Get.dialog(AlertDialog(
-        title: Text('File Converted Successfully'),
-        content: Text("File Saved to '$path'"),
-        actions: [
-          TextButton(
-            onPressed: () => Get.back(), // Closes the dialog
-            child: Text('OK'),
-          ),
-        ],
-      ));
-      return file;
+      if (ext == 'jpeg') {
+        for (int i = 0; i < downloadUri.length; i++) {
+          final uri = Uri.parse(downloadUri[i]);
+          final response = await http.get(uri);
+          // final path = (await getApplicationDocumentsDirectory()).path;
+
+          final fileName = '${i + 1}.jpeg';
+          final filePath = '$path$fileName';
+
+          final file = File(filePath);
+          await file.writeAsBytes(response.bodyBytes);
+          print('File saved: $filePath');
+        }
+
+        // Show success dialog after all files are downloaded
+        Get.dialog(AlertDialog(
+          title: Text('Files Converted Successfully'),
+          content: Text("Images saved to Gallery"),
+          actions: [
+            TextButton(
+              onPressed: () => Get.back(),
+              child: Text('OK'),
+            ),
+          ],
+        ));
+      } else {
+        final resultResponse = await http.get(Uri.parse(downloadUri[0]));
+        // final directory = await getApplicationDocumentsDirectory();
+        final file = File(path!);
+        // final file = File('${directory.path}/$outputFileName');
+        await file.writeAsBytes(resultResponse.bodyBytes);
+        print('File saved: ${file.path}');
+        Get.dialog(AlertDialog(
+          title: Text('File Converted Successfully'),
+          content: Text("File Saved to Downloads"),
+          // content: Text("File Saved to '$path'"),
+          actions: [
+            TextButton(
+              onPressed: () => Get.back(), // Closes the dialog
+              child: Text('OK'),
+            ),
+          ],
+        ));
+      }
+      // return file;
     } catch (e) {
       Get.dialog(AlertDialog(
         title: Text('File Conversion Failed'),

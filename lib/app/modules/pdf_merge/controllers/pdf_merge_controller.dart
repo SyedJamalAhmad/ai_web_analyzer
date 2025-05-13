@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:path/path.dart';
 
@@ -49,14 +50,29 @@ class PdfMergeController extends GetxController {
       update();
     }
   }
+Future<void> mergePdfFiles() async {
+  try {
+    final connectivity = await Connectivity().checkConnectivity();
+    if (connectivity == ConnectivityResult.none) {
+      Get.snackbar('No Internet Connection', 'Please check your internet and try again');
+      return;
+    }
+  } catch (e) {
+    print('Connectivity error: $e');
+    return;
+  }
 
-  Future<void> mergePdfFiles() async {
-    isLoading.value = true;
-    Dio dio = Dio();
+  isLoading.value = true;
+
+  try {
+    Dio dio = Dio(BaseOptions(
+      connectTimeout: const Duration(seconds: 60),
+      receiveTimeout: const Duration(seconds: 60),
+    ));
+
     List<File> pdfFile = pdfFiles;
     FormData formData = FormData();
 
-    // Add each file to the form data
     for (var file in pdfFile) {
       formData.files.add(MapEntry(
         'files',
@@ -72,28 +88,96 @@ class PdfMergeController extends GetxController {
       'http://165.227.96.78:3001/api/pdf/merge',
       data: formData,
       options: Options(
-        responseType: ResponseType.bytes, // Simple bytes response like compress
-        headers: {
-          'Accept': 'application/pdf',
-        },
+        responseType: ResponseType.bytes,
+        headers: {'Accept': 'application/pdf'},
       ),
     );
 
-    // Uint8List mergedPdfData = Uint8List.fromList(response.data);
     Uint8List pdfData = Uint8List.fromList(response.data);
     final dir = await getApplicationDocumentsDirectory();
-    mergedFile = File(
-        '${dir.path}/merged_file${DateTime.now().millisecondsSinceEpoch}.pdf');
+    mergedFile = File('${dir.path}/merged_${DateTime.now().millisecondsSinceEpoch}.pdf');
     await mergedFile!.writeAsBytes(pdfData);
-    isLoading.value = false;
-    isgenerated.value = true;
-    print(mergedFile);
-    // final dir = await getApplicationDocumentsDirectory();
-    // final mergedFile = File('${dir.path}/merged_output.pdf');
-    // await mergedFile.writeAsBytes(mergedPdfData);
 
-    // print('Merged PDF saved at: ${mergedFile.path}');
+    isgenerated.value = true;
+  } on DioException catch (e) {
+    if (e.type == DioExceptionType.receiveTimeout ||
+        e.type == DioExceptionType.connectionTimeout) {
+      Get.snackbar('Timeout Error', 'Server did not respond in time. Please try again.');
+    } else {
+      Get.snackbar('Merge Failed', 'Something went wrong: ${e.message}');
+    }
+  } catch (e) {
+    Get.snackbar('Unexpected Error', e.toString());
+  } finally {
+    isLoading.value = false;
   }
+}
+
+  // Future<void> mergePdfFiles() async {
+  //   try {
+  //     // print('connectivity');
+
+  //     final connectivity = await Connectivity().checkConnectivity();
+  //     // print(connectivity);
+  //     // print(connectivity.length);
+  //     // print(connectivity[0]);
+  //     if (connectivity[0] == ConnectivityResult.none) {
+  //       // print('failed');
+  //       Get.snackbar('No Internet Connection',
+  //           'Please Check your Internet Connectionand try again');
+  //       // errorTitle = 'No Internet Connection';
+  //       // errorString = 'Please Check Your Internet Connection and try again';
+  //       // throw 'No internet connection';
+  //       // throw ('wewe');
+  //       return;
+  //     }
+  //   } catch (e) {
+  //     print(e);
+  //     // return;
+  //   }
+  //   isLoading.value = true;
+  //   Dio dio = Dio();
+  //   List<File> pdfFile = pdfFiles;
+  //   FormData formData = FormData();
+
+  //   // Add each file to the form data
+  //   for (var file in pdfFile) {
+  //     formData.files.add(MapEntry(
+  //       'files',
+  //       await MultipartFile.fromFile(
+  //         file.path,
+  //         filename: basename(file.path),
+  //         contentType: MediaType('application', 'pdf'),
+  //       ),
+  //     ));
+  //   }
+
+  //   Response response = await dio.post(
+  //     'http://165.227.96.78:3001/api/pdf/merge',
+  //     data: formData,
+  //     options: Options(
+  //       responseType: ResponseType.bytes, // Simple bytes response like compress
+  //       headers: {
+  //         'Accept': 'application/pdf',
+  //       },
+  //     ),
+  //   );
+
+  //   // Uint8List mergedPdfData = Uint8List.fromList(response.data);
+  //   Uint8List pdfData = Uint8List.fromList(response.data);
+  //   final dir = await getApplicationDocumentsDirectory();
+  //   mergedFile = File(
+  //       '${dir.path}/merged_file${DateTime.now().millisecondsSinceEpoch}.pdf');
+  //   await mergedFile!.writeAsBytes(pdfData);
+  //   isLoading.value = false;
+  //   isgenerated.value = true;
+  //   print(mergedFile);
+  //   // final dir = await getApplicationDocumentsDirectory();
+  //   // final mergedFile = File('${dir.path}/merged_output.pdf');
+  //   // await mergedFile.writeAsBytes(mergedPdfData);
+
+  //   // print('Merged PDF saved at: ${mergedFile.path}');
+  // }
 
   // Future<PdfInfoResponse> getInfoFunction() async {
   //   // Future<PdfInfoResponse> getInfoFunction(File file) async {
