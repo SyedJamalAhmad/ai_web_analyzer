@@ -9,12 +9,33 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:ai_web_analyzer/app/modules/home/controller/home_view_ctl.dart';
 import 'package:ai_web_analyzer/app/utills/size_config.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomeView extends GetView<HomeViewCTL> {
   const HomeView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    void _shareApp(BuildContext context) {
+      Share.share(
+          "Consider downloading this exceptional app, available on the Google Play Store at the following link: https://play.google.com/store/apps/details?id=app.chatwebai.pdfai_app");
+      // 'Check out this amazing cat cartoon channel for kids! 🐱 https://yourchannel.link');
+    }
+
+    void _sendFeedback(BuildContext context) async {
+      final Uri emailLaunchUri = Uri.parse(
+          'https://play.google.com/store/apps/details?id=com.ai.caloriecounter.scanner');
+
+      if (await canLaunchUrl(emailLaunchUri)) {
+        await launchUrl(emailLaunchUri);
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Could not open email app')),
+        );
+      }
+    }
+
     SizeConfig().init(context);
     PdfOperationsController ppcontroller = Get.put(PdfOperationsController());
     return Scaffold(
@@ -59,6 +80,30 @@ class HomeView extends GetView<HomeViewCTL> {
           //     onPressed: () {},
           //   ),
           // ],
+        ),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: Text('Menu',
+                  style: TextStyle(color: Colors.white, fontSize: 24)),
+            ),
+            ListTile(
+              leading: const Icon(Icons.star_rate),
+              title: const Text('Feedback'),
+              onTap: () => _sendFeedback(context),
+            ),
+            ListTile(
+              leading: const Icon(Icons.share),
+              title: const Text('Share'),
+              onTap: () => _shareApp(context),
+            ),
+          ],
         ),
       ),
       body: Stack(
@@ -252,182 +297,185 @@ class HomeView extends GetView<HomeViewCTL> {
                 // Features Section //
 
                 Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: GridView.count(crossAxisCount: 2,
-                   shrinkWrap: true,
-    crossAxisSpacing: 3,
-    mainAxisSpacing: 5,
-    childAspectRatio: 0.9,
-    physics: NeverScrollableScrollPhysics(), //
-                  
-                  children: [
-                     FeatureCard1(
-                       title: 'AI PDF Assistant',
-                       description:
-                           'Summarize, extract insights, and get instant answers',
-                     ),
-                     
- Card(
-                        elevation: 4,
-                        
-                        // margin: const EdgeInsets.symmetric(
-                        //     horizontal: 16, vertical: 8),
-                        child: InkWell(
-                          onTap: () {
-                            Get.toNamed(Routes.PDFSCANNER);
-                            // PdfOperationsController ppcontroller =
-                            //     Get.put(PdfOperationsController());
-                            // ppcontroller.pdfConverter();
-                          },
-                          // borderRadius: BorderRadius.circular(15),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                colors: [Colors.red.shade50, Colors.white],
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                              ),
-                              borderRadius: BorderRadius.circular(15),
-                              border: Border.all(
-                                  color: Colors.red.shade900, width: 1),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                 
-                                  Row(mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Icon(
-                                        Icons.image,
-                                        color: Colors.red.shade800,
-                                        size: 32,
-                                      ),
-                                       Icon(
-                                    Icons.arrow_forward,
-                                    color: Colors.red.shade800,
-                                    size: 28,
-                                  ),
-                                  Icon(
-                                    Icons.picture_as_pdf,
-                                    color: Colors.red.shade800,
-                                    size: 32,
-                                  ),
-                                    ],
-                                  ),
-                                  SizedBox(height: 8,),
-                                 
-                                   Text(
-                                    // operation.name,
-                                    'Scan to PDF',
-                                    // style:
-                                    //     Theme.of(context).textTheme.titleMedium?.copyWith(
-                                    //           fontWeight: FontWeight.bold,
-                                    //         ),
-                                    style: TextStyle(
-                                        color: Colors.red.shade800,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 15),
-                                  ),
-                                SizedBox(height: 8,),
-                                  Text(
-                                    // operation.description,
-                                    'Turn images into high quality PDFs in seconds.',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: Colors.grey.shade700,
-                                      fontFamily: 'Roboto',
-                                      height: 1.5,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
+                    padding: EdgeInsets.all(16.0),
+                    child: GridView.count(
+                      crossAxisCount: 2,
+                      shrinkWrap: true,
+                      crossAxisSpacing: 3,
+                      mainAxisSpacing: 5,
+                      childAspectRatio: 0.9,
+                      physics: NeverScrollableScrollPhysics(), //
 
-                      Card(
-                        
-                        elevation: 4,
-                        
-                        child: InkWell(
-                          onTap: () async {
-                            // Get.toNamed(Routes.PDF_OPERATIONS);
-
-                            await ppcontroller.pdfConverter();
-                          },
-                          // borderRadius: BorderRadius.circular(15),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                colors: [Colors.red.shade50, Colors.white],
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                              ),
-                              borderRadius: BorderRadius.circular(15),
-                              border: Border.all(
-                                  color: Colors.red.shade900, width: 1),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                 
-                                  Row(mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Icon(
-                                        Icons.picture_as_pdf,
-                                        color: Colors.red.shade800,
-                                        size: 32,
-                                      ),
-                                       Icon(
-                                    Icons.arrow_forward,
-                                    color: Colors.red.shade800,
-                                    size: 28,
-                                  ),
-                                  Icon(
-                                    Icons.save_rounded,
-                                    color: Colors.red.shade800,
-                                    size: 32,
-                                  ),
-                                    ],
-                                  ),
-                                  SizedBox(height: 8,),
-                                 
-                                   Text(
-                                    // operation.name,
-                                    'PDF Converter',
-                                  
-                                    style: TextStyle(
-                                        color: Colors.red.shade800,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 15),
-                                  ),
-                               SizedBox(height: 8,),
-                                  
-                                  Text(
-                                    // operation.description,
-                                    'Transform PDFs into Word, Excel, PowerPoint & more formats.',
-                                   
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: Colors.grey.shade700,
-                                      fontFamily: 'Roboto',
-                                      height: 1.5,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
+                      children: [
+                        FeatureCard1(
+                          title: 'AI PDF Assistant',
+                          description:
+                              'Summarize, extract insights, and get instant answers',
                         ),
-                      ),
-                      Card(
+                        Card(
                           elevation: 4,
-                          
+
+                          // margin: const EdgeInsets.symmetric(
+                          //     horizontal: 16, vertical: 8),
+                          child: InkWell(
+                            onTap: () {
+                              Get.toNamed(Routes.PDFSCANNER);
+                              // PdfOperationsController ppcontroller =
+                              //     Get.put(PdfOperationsController());
+                              // ppcontroller.pdfConverter();
+                            },
+                            // borderRadius: BorderRadius.circular(15),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: [Colors.red.shade50, Colors.white],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                ),
+                                borderRadius: BorderRadius.circular(15),
+                                border: Border.all(
+                                    color: Colors.red.shade900, width: 1),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Icon(
+                                          Icons.image,
+                                          color: Colors.red.shade800,
+                                          size: 32,
+                                        ),
+                                        Icon(
+                                          Icons.arrow_forward,
+                                          color: Colors.red.shade800,
+                                          size: 28,
+                                        ),
+                                        Icon(
+                                          Icons.picture_as_pdf,
+                                          color: Colors.red.shade800,
+                                          size: 32,
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 8,
+                                    ),
+                                    Text(
+                                      // operation.name,
+                                      'Scan to PDF',
+                                      // style:
+                                      //     Theme.of(context).textTheme.titleMedium?.copyWith(
+                                      //           fontWeight: FontWeight.bold,
+                                      //         ),
+                                      style: TextStyle(
+                                          color: Colors.red.shade800,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15),
+                                    ),
+                                    SizedBox(
+                                      height: 8,
+                                    ),
+                                    Text(
+                                      // operation.description,
+                                      'Turn images into high quality PDFs in seconds.',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.grey.shade700,
+                                        fontFamily: 'Roboto',
+                                        height: 1.5,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Card(
+                          elevation: 4,
+                          child: InkWell(
+                            onTap: () async {
+                              // Get.toNamed(Routes.PDF_OPERATIONS);
+
+                              await ppcontroller.pdfConverter();
+                            },
+                            // borderRadius: BorderRadius.circular(15),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: [Colors.red.shade50, Colors.white],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                ),
+                                borderRadius: BorderRadius.circular(15),
+                                border: Border.all(
+                                    color: Colors.red.shade900, width: 1),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Icon(
+                                          Icons.picture_as_pdf,
+                                          color: Colors.red.shade800,
+                                          size: 32,
+                                        ),
+                                        Icon(
+                                          Icons.arrow_forward,
+                                          color: Colors.red.shade800,
+                                          size: 28,
+                                        ),
+                                        Icon(
+                                          Icons.save_rounded,
+                                          color: Colors.red.shade800,
+                                          size: 32,
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 8,
+                                    ),
+                                    Text(
+                                      // operation.name,
+                                      'PDF Converter',
+
+                                      style: TextStyle(
+                                          color: Colors.red.shade800,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15),
+                                    ),
+                                    SizedBox(
+                                      height: 8,
+                                    ),
+                                    Text(
+                                      // operation.description,
+                                      'Transform PDFs into Word, Excel, PowerPoint & more formats.',
+
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.grey.shade700,
+                                        fontFamily: 'Roboto',
+                                        height: 1.5,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Card(
+                          elevation: 4,
                           child: InkWell(
                             onTap: () {
                               Get.toNamed(Routes.PDF_OPERATIONS);
@@ -451,12 +499,13 @@ class HomeView extends GetView<HomeViewCTL> {
                                   children: [
                                     Icon(
                                       Icons.picture_as_pdf,
-                                       color: Colors.red.shade800,
-                                    size: 32,
-                                    
+                                      color: Colors.red.shade800,
+                                      size: 32,
                                     ),
                                     const SizedBox(height: 8),
-                                    Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
                                           // operation.name,
@@ -470,16 +519,17 @@ class HomeView extends GetView<HomeViewCTL> {
                                               fontWeight: FontWeight.bold,
                                               fontSize: 15),
                                         ),
-                                        Icon(Icons.arrow_forward_ios_rounded,
-                                        color: Colors.red.shade800,)
+                                        Icon(
+                                          Icons.arrow_forward_ios_rounded,
+                                          color: Colors.red.shade800,
+                                        )
                                       ],
                                     ),
-                                    
                                     const SizedBox(height: 8),
                                     Text(
                                       // operation.description,
                                       'Manipulate and convert PDFs with advance powerful Tools',
-                                      
+
                                       style: TextStyle(
                                         fontSize: 12,
                                         color: Colors.grey.shade700,
@@ -493,9 +543,8 @@ class HomeView extends GetView<HomeViewCTL> {
                             ),
                           ),
                         ),
-
-                  ],)
-                ),
+                      ],
+                    )),
                 //////////
                 ///
                 ///
@@ -949,7 +998,6 @@ class HomeView extends GetView<HomeViewCTL> {
                 //     ],
                 //   ),
                 // ),
-             
               ],
             ),
           ),
@@ -1005,10 +1053,9 @@ class FeatureCard1 extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),
       ),
-      
       child: GestureDetector(
-        onTap: () async{
-           await controller.goToPdf();
+        onTap: () async {
+          await controller.goToPdf();
         },
         child: Container(
           decoration: BoxDecoration(
