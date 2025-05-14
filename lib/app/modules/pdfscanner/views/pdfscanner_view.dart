@@ -252,7 +252,7 @@ class GenerationView extends StatelessWidget {
               Obx(() => Visibility(
                     visible: controller.images.isNotEmpty,
                     child: SizedBox(
-                      width: double.infinity,
+                      width: SizeConfig.blockSizeHorizontal * 40,
                       child: ElevatedButton.icon(
                         onPressed: controller.createPdfFromImages,
                         icon: Icon(

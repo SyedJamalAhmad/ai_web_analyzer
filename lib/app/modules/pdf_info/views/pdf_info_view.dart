@@ -163,7 +163,7 @@ class PdfInfoView extends GetView<PdfInfoController> {
                                 // Container(height: 1,)
                                 // const Spacer(),
                                 SizedBox(
-                                  height: SizeConfig.screenHeight * 0.5,
+                                  height: SizeConfig.screenHeight * 0.01,
                                 ),
                                 ElevatedButton(
                                   onPressed: () async {
@@ -172,12 +172,12 @@ class PdfInfoView extends GetView<PdfInfoController> {
                                   },
                                   style: ElevatedButton.styleFrom(
                                     padding: const EdgeInsets.symmetric(
-                                        vertical: 16, horizontal: 32),
+                                        vertical: 12, horizontal: 32),
                                     shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8),
+                                      borderRadius: BorderRadius.circular(12),
                                     ),
                                     backgroundColor:
-                                        Theme.of(context).primaryColor,
+                                        Colors.red.shade700
                                   ),
                                   child: const Text(
                                     'Get PDF Info',

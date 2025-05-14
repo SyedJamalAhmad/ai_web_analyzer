@@ -249,35 +249,29 @@ class HomeView extends GetView<HomeViewCTL> {
                 ),
                 // const SizedBox(height: 20),
 
-                // Features Section
+                // Features Section //
+
                 Padding(
                   padding: EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Text(
-                      //   'More Features:',
-                      //   style: TextStyle(
-                      //       fontSize: 20,
-                      //       // color: Color(0xFF1A73E8),
-                      //       color: Colors.black,
-                      //       fontWeight: FontWeight.bold),
-                      // ),
-                      // SizedBox(height: 20),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 12.0, vertical: 4),
-                        child: FeatureCard(
-                          title: 'AI PDF Assistant',
-                          description:
-                              'AI powered PDF reader that helps you summarize, extract key insights, and get answers instantly.',
-                        ),
-                      ),
-
-                      Card(
+                  child: GridView.count(crossAxisCount: 2,
+                   shrinkWrap: true,
+    crossAxisSpacing: 3,
+    mainAxisSpacing: 5,
+    childAspectRatio: 0.9,
+    physics: NeverScrollableScrollPhysics(), //
+                  
+                  children: [
+                     FeatureCard1(
+                       title: 'AI PDF Assistant',
+                       description:
+                           'Summarize, extract insights, and get instant answers',
+                     ),
+                     
+ Card(
                         elevation: 4,
-                        margin: const EdgeInsets.symmetric(
-                            horizontal: 16, vertical: 8),
+                        
+                        // margin: const EdgeInsets.symmetric(
+                        //     horizontal: 16, vertical: 8),
                         child: InkWell(
                           onTap: () {
                             Get.toNamed(Routes.PDFSCANNER);
@@ -293,7 +287,7 @@ class HomeView extends GetView<HomeViewCTL> {
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight,
                               ),
-                              borderRadius: BorderRadius.circular(12),
+                              borderRadius: BorderRadius.circular(15),
                               border: Border.all(
                                   color: Colors.red.shade900, width: 1),
                             ),
@@ -302,78 +296,46 @@ class HomeView extends GetView<HomeViewCTL> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Row(
+                                 
+                                  Row(mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
-                                      //   Container(
-                                      //     padding: const EdgeInsets.all(12),
-                                      //     decoration: BoxDecoration(
-                                      //       color: Colors.red.shade800,
-                                      //       // color: Theme.of(context).colorScheme.primaryContainer,
-                                      //       borderRadius: BorderRadius.circular(12),
-                                      //     ),
-                                      //     child: Icon(
-                                      //       // _getIconData(operation.iconName),
-                                      //       Icons.picture_as_pdf,
-                                      //       // color: Theme.of(context).colorScheme.primary,
-                                      //       color: Colors.white,
-                                      //       size: 24,
-                                      //     ),
-                                      //   ),
-
-                                      Expanded(
-                                        child: Text(
-                                          // operation.name,
-                                          'Scan to PDF',
-                                          // style:
-                                          //     Theme.of(context).textTheme.titleMedium?.copyWith(
-                                          //           fontWeight: FontWeight.bold,
-                                          //         ),
-                                          style: TextStyle(
-                                              color: Colors.red.shade800,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 18),
-                                        ),
-                                      ),
                                       Icon(
                                         Icons.image,
                                         color: Colors.red.shade800,
-                                        size: 28,
+                                        size: 32,
                                       ),
-                                      Icon(
-                                        Icons.arrow_forward,
-                                        color: Colors.red.shade800,
-                                        size: 28,
-                                      ),
-                                      Icon(
-                                        Icons.picture_as_pdf,
-                                        color: Colors.red.shade800,
-                                        size: 28,
-                                      ),
-                                      const SizedBox(width: 16),
-
-                                      // Icon(
-                                      //   Icons.arrow_forward_ios,
-                                      //   size: 16,
-                                      //   color:
-                                      //       Theme.of(context).colorScheme.onSurfaceVariant,
-                                      // ),
+                                       Icon(
+                                    Icons.arrow_forward,
+                                    color: Colors.red.shade800,
+                                    size: 28,
+                                  ),
+                                  Icon(
+                                    Icons.picture_as_pdf,
+                                    color: Colors.red.shade800,
+                                    size: 32,
+                                  ),
                                     ],
                                   ),
-                                  const SizedBox(height: 16),
-                                  // Row(
-                                  //   mainAxisAlignment: MainAxisAlignment.center,
-                                  //   children: [
-                                  //   ],
-                                  // ),
-                                  // const SizedBox(height: 16),
+                                  SizedBox(height: 8,),
+                                 
+                                   Text(
+                                    // operation.name,
+                                    'Scan to PDF',
+                                    // style:
+                                    //     Theme.of(context).textTheme.titleMedium?.copyWith(
+                                    //           fontWeight: FontWeight.bold,
+                                    //         ),
+                                    style: TextStyle(
+                                        color: Colors.red.shade800,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15),
+                                  ),
+                                SizedBox(height: 8,),
                                   Text(
                                     // operation.description,
-                                    'Convert your images into pdf',
-                                    // style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                    //       color: Theme.of(context).colorScheme.onSurfaceVariant,
-                                    //     ),
+                                    'Turn images into high quality PDFs in seconds.',
                                     style: TextStyle(
-                                      fontSize: 14,
+                                      fontSize: 12,
                                       color: Colors.grey.shade700,
                                       fontFamily: 'Roboto',
                                       height: 1.5,
@@ -385,10 +347,11 @@ class HomeView extends GetView<HomeViewCTL> {
                           ),
                         ),
                       ),
+
                       Card(
+                        
                         elevation: 4,
-                        margin: const EdgeInsets.symmetric(
-                            horizontal: 16, vertical: 8),
+                        
                         child: InkWell(
                           onTap: () async {
                             // Get.toNamed(Routes.PDF_OPERATIONS);
@@ -403,7 +366,7 @@ class HomeView extends GetView<HomeViewCTL> {
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight,
                               ),
-                              borderRadius: BorderRadius.circular(12),
+                              borderRadius: BorderRadius.circular(15),
                               border: Border.all(
                                   color: Colors.red.shade900, width: 1),
                             ),
@@ -412,78 +375,45 @@ class HomeView extends GetView<HomeViewCTL> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Row(
+                                 
+                                  Row(mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
-                                      //   Container(
-                                      //     padding: const EdgeInsets.all(12),
-                                      //     decoration: BoxDecoration(
-                                      //       color: Colors.red.shade800,
-                                      //       // color: Theme.of(context).colorScheme.primaryContainer,
-                                      //       borderRadius: BorderRadius.circular(12),
-                                      //     ),
-                                      //     child: Icon(
-                                      //       // _getIconData(operation.iconName),
-                                      //       Icons.picture_as_pdf,
-                                      //       // color: Theme.of(context).colorScheme.primary,
-                                      //       color: Colors.white,
-                                      //       size: 24,
-                                      //     ),
-                                      //   ),
-
-                                      Expanded(
-                                        child: Text(
-                                          // operation.name,
-                                          'PDF Converter',
-                                          // style:
-                                          //     Theme.of(context).textTheme.titleMedium?.copyWith(
-                                          //           fontWeight: FontWeight.bold,
-                                          //         ),
-                                          style: TextStyle(
-                                              color: Colors.red.shade800,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 18),
-                                        ),
-                                      ),
                                       Icon(
                                         Icons.picture_as_pdf,
                                         color: Colors.red.shade800,
-                                        size: 28,
+                                        size: 32,
                                       ),
-                                      Icon(
-                                        Icons.arrow_forward,
-                                        color: Colors.red.shade800,
-                                        size: 28,
-                                      ),
-                                      Icon(
-                                        Icons.save_rounded,
-                                        color: Colors.red.shade800,
-                                        size: 28,
-                                      ),
-                                      const SizedBox(width: 16),
-
-                                      // Icon(
-                                      //   Icons.arrow_forward_ios,
-                                      //   size: 16,
-                                      //   color:
-                                      //       Theme.of(context).colorScheme.onSurfaceVariant,
-                                      // ),
+                                       Icon(
+                                    Icons.arrow_forward,
+                                    color: Colors.red.shade800,
+                                    size: 28,
+                                  ),
+                                  Icon(
+                                    Icons.save_rounded,
+                                    color: Colors.red.shade800,
+                                    size: 32,
+                                  ),
                                     ],
                                   ),
-                                  const SizedBox(height: 16),
-                                  // Row(
-                                  //   mainAxisAlignment: MainAxisAlignment.center,
-                                  //   children: [
-                                  //   ],
-                                  // ),
-                                  // const SizedBox(height: 16),
+                                  SizedBox(height: 8,),
+                                 
+                                   Text(
+                                    // operation.name,
+                                    'PDF Converter',
+                                  
+                                    style: TextStyle(
+                                        color: Colors.red.shade800,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15),
+                                  ),
+                               SizedBox(height: 8,),
+                                  
                                   Text(
                                     // operation.description,
-                                    'Convert your PDF into Word, Excel, PowerPoint, and more.',
-                                    // style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                    //       color: Theme.of(context).colorScheme.onSurfaceVariant,
-                                    //     ),
+                                    'Transform PDFs into Word, Excel, PowerPoint & more formats.',
+                                   
                                     style: TextStyle(
-                                      fontSize: 14,
+                                      fontSize: 12,
                                       color: Colors.grey.shade700,
                                       fontFamily: 'Roboto',
                                       height: 1.5,
@@ -495,122 +425,9 @@ class HomeView extends GetView<HomeViewCTL> {
                           ),
                         ),
                       ),
-                      // Card(
-                      //   elevation: 4,
-                      //   margin: const EdgeInsets.symmetric(
-                      //       horizontal: 16, vertical: 8),
-                      //   child: InkWell(
-                      //     onTap: () async {
-                      //       // Get.toNamed(Routes.PDF_OPERATIONS);
-
-                      //       await ppcontroller.pdfConverter();
-                      //     },
-                      //     // borderRadius: BorderRadius.circular(15),
-                      //     child: Container(
-                      //       decoration: BoxDecoration(
-                      //         gradient: LinearGradient(
-                      //           colors: [Colors.red.shade50, Colors.white],
-                      //           begin: Alignment.topLeft,
-                      //           end: Alignment.bottomRight,
-                      //         ),
-                      //         borderRadius: BorderRadius.circular(12),
-                      //         border: Border.all(
-                      //             color: Colors.red.shade900, width: 1),
-                      //       ),
-                      //       child: Padding(
-                      //         padding: const EdgeInsets.all(16.0),
-                      //         child: Column(
-                      //           crossAxisAlignment: CrossAxisAlignment.start,
-                      //           children: [
-                      //             Row(
-                      //               children: [
-                      //                 //   Container(
-                      //                 //     padding: const EdgeInsets.all(12),
-                      //                 //     decoration: BoxDecoration(
-                      //                 //       color: Colors.red.shade800,
-                      //                 //       // color: Theme.of(context).colorScheme.primaryContainer,
-                      //                 //       borderRadius: BorderRadius.circular(12),
-                      //                 //     ),
-                      //                 //     child: Icon(
-                      //                 //       // _getIconData(operation.iconName),
-                      //                 //       Icons.picture_as_pdf,
-                      //                 //       // color: Theme.of(context).colorScheme.primary,
-                      //                 //       color: Colors.white,
-                      //                 //       size: 24,
-                      //                 //     ),
-                      //                 //   ),
-
-                      //                 Expanded(
-                      //                   child: Text(
-                      //                     // operation.name,
-                      //                     'PDF Converter',
-                      //                     // style:
-                      //                     //     Theme.of(context).textTheme.titleMedium?.copyWith(
-                      //                     //           fontWeight: FontWeight.bold,
-                      //                     //         ),
-                      //                     style: TextStyle(
-                      //                         color: Colors.red.shade800,
-                      //                         fontWeight: FontWeight.bold,
-                      //                         fontSize: 18),
-                      //                   ),
-                      //                 ),
-                      //                 Icon(
-                      //                   Icons.picture_as_pdf,
-                      //                   color: Colors.red.shade800,
-                      //                   size: 28,
-                      //                 ),
-                      //                 Icon(
-                      //                   Icons.arrow_forward,
-                      //                   color: Colors.red.shade800,
-                      //                   size: 28,
-                      //                 ),
-                      //                 Icon(
-                      //                   Icons.save_rounded,
-                      //                   color: Colors.red.shade800,
-                      //                   size: 28,
-                      //                 ),
-                      //                 const SizedBox(width: 16),
-
-                      //                 // Icon(
-                      //                 //   Icons.arrow_forward_ios,
-                      //                 //   size: 16,
-                      //                 //   color:
-                      //                 //       Theme.of(context).colorScheme.onSurfaceVariant,
-                      //                 // ),
-                      //               ],
-                      //             ),
-                      //             const SizedBox(height: 16),
-                      //             // Row(
-                      //             //   mainAxisAlignment: MainAxisAlignment.center,
-                      //             //   children: [
-                      //             //   ],
-                      //             // ),
-                      //             // const SizedBox(height: 16),
-                      //             Text(
-                      //               // operation.description,
-                      //               'Convert your PDF into Word, Excel, PowerPoint, and more.',
-                      //               // style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      //               //       color: Theme.of(context).colorScheme.onSurfaceVariant,
-                      //               //     ),
-                      //               style: TextStyle(
-                      //                 fontSize: 14,
-                      //                 color: Colors.grey.shade700,
-                      //                 fontFamily: 'Roboto',
-                      //                 height: 1.5,
-                      //               ),
-                      //             ),
-                      //           ],
-                      //         ),
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(8.0, 0, 8, 0),
-                        child: Card(
+                      Card(
                           elevation: 4,
-                          margin: const EdgeInsets.symmetric(
-                              horizontal: 8, vertical: 8),
+                          
                           child: InkWell(
                             onTap: () {
                               Get.toNamed(Routes.PDF_OPERATIONS);
@@ -623,7 +440,7 @@ class HomeView extends GetView<HomeViewCTL> {
                                   begin: Alignment.topLeft,
                                   end: Alignment.bottomRight,
                                 ),
-                                borderRadius: BorderRadius.circular(12),
+                                borderRadius: BorderRadius.circular(15),
                                 border: Border.all(
                                     color: Colors.red.shade900, width: 1),
                               ),
@@ -632,57 +449,39 @@ class HomeView extends GetView<HomeViewCTL> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Row(
+                                    Icon(
+                                      Icons.picture_as_pdf,
+                                       color: Colors.red.shade800,
+                                    size: 32,
+                                    
+                                    ),
+                                    const SizedBox(height: 8),
+                                    Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Container(
-                                          padding: const EdgeInsets.all(12),
-                                          decoration: BoxDecoration(
-                                            color: Colors.red.shade800,
-                                            // color: Theme.of(context).colorScheme.primaryContainer,
-                                            borderRadius:
-                                                BorderRadius.circular(12),
-                                          ),
-                                          child: Icon(
-                                            // _getIconData(operation.iconName),
-                                            Icons.picture_as_pdf,
-                                            // color: Theme.of(context).colorScheme.primary,
-                                            color: Colors.white,
-                                            size: 24,
-                                          ),
+                                        Text(
+                                          // operation.name,
+                                          'More Pdf Tools',
+                                          // style:
+                                          //     Theme.of(context).textTheme.titleMedium?.copyWith(
+                                          //           fontWeight: FontWeight.bold,
+                                          //         ),
+                                          style: TextStyle(
+                                              color: Colors.red.shade800,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 15),
                                         ),
-                                        const SizedBox(width: 16),
-                                        Expanded(
-                                          child: Text(
-                                            // operation.name,
-                                            'More Pdf Operations',
-                                            // style:
-                                            //     Theme.of(context).textTheme.titleMedium?.copyWith(
-                                            //           fontWeight: FontWeight.bold,
-                                            //         ),
-                                            style: TextStyle(
-                                                color: Colors.red.shade800,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 18),
-                                          ),
-                                        ),
-                                        Icon(
-                                          Icons.arrow_forward_ios,
-                                          size: 16,
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .onSurfaceVariant,
-                                        ),
+                                        Icon(Icons.arrow_forward_ios_rounded,
+                                        color: Colors.red.shade800,)
                                       ],
                                     ),
-                                    const SizedBox(height: 16),
+                                    
+                                    const SizedBox(height: 8),
                                     Text(
                                       // operation.description,
-                                      'Manipulate and convert PDF with advance PDF Tools',
-                                      // style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                      //       color: Theme.of(context).colorScheme.onSurfaceVariant,
-                                      //     ),
+                                      'Manipulate and convert PDFs with advance powerful Tools',
+                                      
                                       style: TextStyle(
-                                        fontSize: 14,
+                                        fontSize: 12,
                                         color: Colors.grey.shade700,
                                         fontFamily: 'Roboto',
                                         height: 1.5,
@@ -694,10 +493,463 @@ class HomeView extends GetView<HomeViewCTL> {
                             ),
                           ),
                         ),
-                      )
-                    ],
-                  ),
+
+                  ],)
                 ),
+                //////////
+                ///
+                ///
+                ///
+                /// Commented by jamal ??????????
+                // Padding(
+                //   padding: EdgeInsets.all(16.0),
+                //   child: Column(
+                //     crossAxisAlignment: CrossAxisAlignment.start,
+                //     children: [
+                //       // Text(
+                //       //   'More Features:',
+                //       //   style: TextStyle(
+                //       //       fontSize: 20,
+                //       //       // color: Color(0xFF1A73E8),
+                //       //       color: Colors.black,
+                //       //       fontWeight: FontWeight.bold),
+                //       // ),
+                //       // SizedBox(height: 20),
+                //       Padding(
+                //         padding: const EdgeInsets.symmetric(
+                //             horizontal: 12.0, vertical: 4),
+                //         child: FeatureCard(
+                //           title: 'AI PDF Assistant',
+                //           description:
+                //               'AI powered PDF reader that helps you summarize, extract key insights, and get answers instantly.',
+                //         ),
+                //       ),
+
+                //       Card(
+                //         elevation: 4,
+                //         margin: const EdgeInsets.symmetric(
+                //             horizontal: 16, vertical: 8),
+                //         child: InkWell(
+                //           onTap: () {
+                //             Get.toNamed(Routes.PDFSCANNER);
+                //             // PdfOperationsController ppcontroller =
+                //             //     Get.put(PdfOperationsController());
+                //             // ppcontroller.pdfConverter();
+                //           },
+                //           // borderRadius: BorderRadius.circular(15),
+                //           child: Container(
+                //             decoration: BoxDecoration(
+                //               gradient: LinearGradient(
+                //                 colors: [Colors.red.shade50, Colors.white],
+                //                 begin: Alignment.topLeft,
+                //                 end: Alignment.bottomRight,
+                //               ),
+                //               borderRadius: BorderRadius.circular(12),
+                //               border: Border.all(
+                //                   color: Colors.red.shade900, width: 1),
+                //             ),
+                //             child: Padding(
+                //               padding: const EdgeInsets.all(16.0),
+                //               child: Column(
+                //                 crossAxisAlignment: CrossAxisAlignment.start,
+                //                 children: [
+                //                   Row(
+                //                     children: [
+                //                       //   Container(
+                //                       //     padding: const EdgeInsets.all(12),
+                //                       //     decoration: BoxDecoration(
+                //                       //       color: Colors.red.shade800,
+                //                       //       // color: Theme.of(context).colorScheme.primaryContainer,
+                //                       //       borderRadius: BorderRadius.circular(12),
+                //                       //     ),
+                //                       //     child: Icon(
+                //                       //       // _getIconData(operation.iconName),
+                //                       //       Icons.picture_as_pdf,
+                //                       //       // color: Theme.of(context).colorScheme.primary,
+                //                       //       color: Colors.white,
+                //                       //       size: 24,
+                //                       //     ),
+                //                       //   ),
+
+                //                       Expanded(
+                //                         child: Text(
+                //                           // operation.name,
+                //                           'Scan to PDF',
+                //                           // style:
+                //                           //     Theme.of(context).textTheme.titleMedium?.copyWith(
+                //                           //           fontWeight: FontWeight.bold,
+                //                           //         ),
+                //                           style: TextStyle(
+                //                               color: Colors.red.shade800,
+                //                               fontWeight: FontWeight.bold,
+                //                               fontSize: 18),
+                //                         ),
+                //                       ),
+                //                       Icon(
+                //                         Icons.image,
+                //                         color: Colors.red.shade800,
+                //                         size: 28,
+                //                       ),
+                //                       Icon(
+                //                         Icons.arrow_forward,
+                //                         color: Colors.red.shade800,
+                //                         size: 28,
+                //                       ),
+                //                       Icon(
+                //                         Icons.picture_as_pdf,
+                //                         color: Colors.red.shade800,
+                //                         size: 28,
+                //                       ),
+                //                       const SizedBox(width: 16),
+
+                //                       // Icon(
+                //                       //   Icons.arrow_forward_ios,
+                //                       //   size: 16,
+                //                       //   color:
+                //                       //       Theme.of(context).colorScheme.onSurfaceVariant,
+                //                       // ),
+                //                     ],
+                //                   ),
+                //                   const SizedBox(height: 16),
+                //                   // Row(
+                //                   //   mainAxisAlignment: MainAxisAlignment.center,
+                //                   //   children: [
+                //                   //   ],
+                //                   // ),
+                //                   // const SizedBox(height: 16),
+                //                   Text(
+                //                     // operation.description,
+                //                     'Convert your images into pdf',
+                //                     // style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                //                     //       color: Theme.of(context).colorScheme.onSurfaceVariant,
+                //                     //     ),
+                //                     style: TextStyle(
+                //                       fontSize: 14,
+                //                       color: Colors.grey.shade700,
+                //                       fontFamily: 'Roboto',
+                //                       height: 1.5,
+                //                     ),
+                //                   ),
+                //                 ],
+                //               ),
+                //             ),
+                //           ),
+                //         ),
+                //       ),
+                //       Card(
+                //         elevation: 4,
+                //         margin: const EdgeInsets.symmetric(
+                //             horizontal: 16, vertical: 8),
+                //         child: InkWell(
+                //           onTap: () async {
+                //             // Get.toNamed(Routes.PDF_OPERATIONS);
+
+                //             await ppcontroller.pdfConverter();
+                //           },
+                //           // borderRadius: BorderRadius.circular(15),
+                //           child: Container(
+                //             decoration: BoxDecoration(
+                //               gradient: LinearGradient(
+                //                 colors: [Colors.red.shade50, Colors.white],
+                //                 begin: Alignment.topLeft,
+                //                 end: Alignment.bottomRight,
+                //               ),
+                //               borderRadius: BorderRadius.circular(12),
+                //               border: Border.all(
+                //                   color: Colors.red.shade900, width: 1),
+                //             ),
+                //             child: Padding(
+                //               padding: const EdgeInsets.all(16.0),
+                //               child: Column(
+                //                 crossAxisAlignment: CrossAxisAlignment.start,
+                //                 children: [
+                //                   Row(
+                //                     children: [
+                //                       //   Container(
+                //                       //     padding: const EdgeInsets.all(12),
+                //                       //     decoration: BoxDecoration(
+                //                       //       color: Colors.red.shade800,
+                //                       //       // color: Theme.of(context).colorScheme.primaryContainer,
+                //                       //       borderRadius: BorderRadius.circular(12),
+                //                       //     ),
+                //                       //     child: Icon(
+                //                       //       // _getIconData(operation.iconName),
+                //                       //       Icons.picture_as_pdf,
+                //                       //       // color: Theme.of(context).colorScheme.primary,
+                //                       //       color: Colors.white,
+                //                       //       size: 24,
+                //                       //     ),
+                //                       //   ),
+
+                //                       Expanded(
+                //                         child: Text(
+                //                           // operation.name,
+                //                           'PDF Converter',
+                //                           // style:
+                //                           //     Theme.of(context).textTheme.titleMedium?.copyWith(
+                //                           //           fontWeight: FontWeight.bold,
+                //                           //         ),
+                //                           style: TextStyle(
+                //                               color: Colors.red.shade800,
+                //                               fontWeight: FontWeight.bold,
+                //                               fontSize: 18),
+                //                         ),
+                //                       ),
+                //                       Icon(
+                //                         Icons.picture_as_pdf,
+                //                         color: Colors.red.shade800,
+                //                         size: 28,
+                //                       ),
+                //                       Icon(
+                //                         Icons.arrow_forward,
+                //                         color: Colors.red.shade800,
+                //                         size: 28,
+                //                       ),
+                //                       Icon(
+                //                         Icons.save_rounded,
+                //                         color: Colors.red.shade800,
+                //                         size: 28,
+                //                       ),
+                //                       const SizedBox(width: 16),
+
+                //                       // Icon(
+                //                       //   Icons.arrow_forward_ios,
+                //                       //   size: 16,
+                //                       //   color:
+                //                       //       Theme.of(context).colorScheme.onSurfaceVariant,
+                //                       // ),
+                //                     ],
+                //                   ),
+                //                   const SizedBox(height: 16),
+                //                   // Row(
+                //                   //   mainAxisAlignment: MainAxisAlignment.center,
+                //                   //   children: [
+                //                   //   ],
+                //                   // ),
+                //                   // const SizedBox(height: 16),
+                //                   Text(
+                //                     // operation.description,
+                //                     'Convert your PDF into Word, Excel, PowerPoint, and more.',
+                //                     // style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                //                     //       color: Theme.of(context).colorScheme.onSurfaceVariant,
+                //                     //     ),
+                //                     style: TextStyle(
+                //                       fontSize: 14,
+                //                       color: Colors.grey.shade700,
+                //                       fontFamily: 'Roboto',
+                //                       height: 1.5,
+                //                     ),
+                //                   ),
+                //                 ],
+                //               ),
+                //             ),
+                //           ),
+                //         ),
+                //       ),
+                //       // Card(
+                //       //   elevation: 4,
+                //       //   margin: const EdgeInsets.symmetric(
+                //       //       horizontal: 16, vertical: 8),
+                //       //   child: InkWell(
+                //       //     onTap: () async {
+                //       //       // Get.toNamed(Routes.PDF_OPERATIONS);
+
+                //       //       await ppcontroller.pdfConverter();
+                //       //     },
+                //       //     // borderRadius: BorderRadius.circular(15),
+                //       //     child: Container(
+                //       //       decoration: BoxDecoration(
+                //       //         gradient: LinearGradient(
+                //       //           colors: [Colors.red.shade50, Colors.white],
+                //       //           begin: Alignment.topLeft,
+                //       //           end: Alignment.bottomRight,
+                //       //         ),
+                //       //         borderRadius: BorderRadius.circular(12),
+                //       //         border: Border.all(
+                //       //             color: Colors.red.shade900, width: 1),
+                //       //       ),
+                //       //       child: Padding(
+                //       //         padding: const EdgeInsets.all(16.0),
+                //       //         child: Column(
+                //       //           crossAxisAlignment: CrossAxisAlignment.start,
+                //       //           children: [
+                //       //             Row(
+                //       //               children: [
+                //       //                 //   Container(
+                //       //                 //     padding: const EdgeInsets.all(12),
+                //       //                 //     decoration: BoxDecoration(
+                //       //                 //       color: Colors.red.shade800,
+                //       //                 //       // color: Theme.of(context).colorScheme.primaryContainer,
+                //       //                 //       borderRadius: BorderRadius.circular(12),
+                //       //                 //     ),
+                //       //                 //     child: Icon(
+                //       //                 //       // _getIconData(operation.iconName),
+                //       //                 //       Icons.picture_as_pdf,
+                //       //                 //       // color: Theme.of(context).colorScheme.primary,
+                //       //                 //       color: Colors.white,
+                //       //                 //       size: 24,
+                //       //                 //     ),
+                //       //                 //   ),
+
+                //       //                 Expanded(
+                //       //                   child: Text(
+                //       //                     // operation.name,
+                //       //                     'PDF Converter',
+                //       //                     // style:
+                //       //                     //     Theme.of(context).textTheme.titleMedium?.copyWith(
+                //       //                     //           fontWeight: FontWeight.bold,
+                //       //                     //         ),
+                //       //                     style: TextStyle(
+                //       //                         color: Colors.red.shade800,
+                //       //                         fontWeight: FontWeight.bold,
+                //       //                         fontSize: 18),
+                //       //                   ),
+                //       //                 ),
+                //       //                 Icon(
+                //       //                   Icons.picture_as_pdf,
+                //       //                   color: Colors.red.shade800,
+                //       //                   size: 28,
+                //       //                 ),
+                //       //                 Icon(
+                //       //                   Icons.arrow_forward,
+                //       //                   color: Colors.red.shade800,
+                //       //                   size: 28,
+                //       //                 ),
+                //       //                 Icon(
+                //       //                   Icons.save_rounded,
+                //       //                   color: Colors.red.shade800,
+                //       //                   size: 28,
+                //       //                 ),
+                //       //                 const SizedBox(width: 16),
+
+                //       //                 // Icon(
+                //       //                 //   Icons.arrow_forward_ios,
+                //       //                 //   size: 16,
+                //       //                 //   color:
+                //       //                 //       Theme.of(context).colorScheme.onSurfaceVariant,
+                //       //                 // ),
+                //       //               ],
+                //       //             ),
+                //       //             const SizedBox(height: 16),
+                //       //             // Row(
+                //       //             //   mainAxisAlignment: MainAxisAlignment.center,
+                //       //             //   children: [
+                //       //             //   ],
+                //       //             // ),
+                //       //             // const SizedBox(height: 16),
+                //       //             Text(
+                //       //               // operation.description,
+                //       //               'Convert your PDF into Word, Excel, PowerPoint, and more.',
+                //       //               // style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                //       //               //       color: Theme.of(context).colorScheme.onSurfaceVariant,
+                //       //               //     ),
+                //       //               style: TextStyle(
+                //       //                 fontSize: 14,
+                //       //                 color: Colors.grey.shade700,
+                //       //                 fontFamily: 'Roboto',
+                //       //                 height: 1.5,
+                //       //               ),
+                //       //             ),
+                //       //           ],
+                //       //         ),
+                //       //       ),
+                //       //     ),
+                //       //   ),
+                //       // ),
+                //       Padding(
+                //         padding: const EdgeInsets.fromLTRB(8.0, 0, 8, 0),
+                //         child: Card(
+                //           elevation: 4,
+                //           margin: const EdgeInsets.symmetric(
+                //               horizontal: 8, vertical: 8),
+                //           child: InkWell(
+                //             onTap: () {
+                //               Get.toNamed(Routes.PDF_OPERATIONS);
+                //             },
+                //             // borderRadius: BorderRadius.circular(15),
+                //             child: Container(
+                //               decoration: BoxDecoration(
+                //                 gradient: LinearGradient(
+                //                   colors: [Colors.red.shade50, Colors.white],
+                //                   begin: Alignment.topLeft,
+                //                   end: Alignment.bottomRight,
+                //                 ),
+                //                 borderRadius: BorderRadius.circular(12),
+                //                 border: Border.all(
+                //                     color: Colors.red.shade900, width: 1),
+                //               ),
+                //               child: Padding(
+                //                 padding: const EdgeInsets.all(16.0),
+                //                 child: Column(
+                //                   crossAxisAlignment: CrossAxisAlignment.start,
+                //                   children: [
+                //                     Row(
+                //                       children: [
+                //                         Container(
+                //                           padding: const EdgeInsets.all(12),
+                //                           decoration: BoxDecoration(
+                //                             color: Colors.red.shade800,
+                //                             // color: Theme.of(context).colorScheme.primaryContainer,
+                //                             borderRadius:
+                //                                 BorderRadius.circular(12),
+                //                           ),
+                //                           child: Icon(
+                //                             // _getIconData(operation.iconName),
+                //                             Icons.picture_as_pdf,
+                //                             // color: Theme.of(context).colorScheme.primary,
+                //                             color: Colors.white,
+                //                             size: 24,
+                //                           ),
+                //                         ),
+                //                         const SizedBox(width: 16),
+                //                         Expanded(
+                //                           child: Text(
+                //                             // operation.name,
+                //                             'More Pdf Operations',
+                //                             // style:
+                //                             //     Theme.of(context).textTheme.titleMedium?.copyWith(
+                //                             //           fontWeight: FontWeight.bold,
+                //                             //         ),
+                //                             style: TextStyle(
+                //                                 color: Colors.red.shade800,
+                //                                 fontWeight: FontWeight.bold,
+                //                                 fontSize: 18),
+                //                           ),
+                //                         ),
+                //                         Icon(
+                //                           Icons.arrow_forward_ios,
+                //                           size: 16,
+                //                           color: Theme.of(context)
+                //                               .colorScheme
+                //                               .onSurfaceVariant,
+                //                         ),
+                //                       ],
+                //                     ),
+                //                     const SizedBox(height: 16),
+                //                     Text(
+                //                       // operation.description,
+                //                       'Manipulate and convert PDF with advance PDF Tools',
+                //                       // style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                //                       //       color: Theme.of(context).colorScheme.onSurfaceVariant,
+                //                       //     ),
+                //                       style: TextStyle(
+                //                         fontSize: 14,
+                //                         color: Colors.grey.shade700,
+                //                         fontFamily: 'Roboto',
+                //                         height: 1.5,
+                //                       ),
+                //                     ),
+                //                   ],
+                //                 ),
+                //               ),
+                //             ),
+                //           ),
+                //         ),
+                //       )
+                //     ],
+                //   ),
+                // ),
+             
               ],
             ),
           ),
@@ -735,11 +987,11 @@ class HomeView extends GetView<HomeViewCTL> {
   }
 }
 
-class FeatureCard extends StatelessWidget {
+class FeatureCard1 extends StatelessWidget {
   final String title;
   final String description;
 
-  const FeatureCard({
+  const FeatureCard1({
     super.key,
     required this.title,
     required this.description,
@@ -753,70 +1005,67 @@ class FeatureCard extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),
       ),
-      child: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.red.shade50, Colors.white],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
+      
+      child: GestureDetector(
+        onTap: () async{
+           await controller.goToPdf();
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Colors.red.shade50, Colors.white],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            borderRadius: BorderRadius.circular(15),
+            border: Border.all(color: Colors.red.shade900, width: 1),
           ),
-          borderRadius: BorderRadius.circular(15),
-          border: Border.all(color: Colors.red.shade900, width: 1),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Icon(
-                    CupertinoIcons.arrow_up_doc_fill,
-                    size: 32,
-                    color: Colors.red.shade800,
-                  ),
-                  const SizedBox(width: 10),
-                  Text(
-                    title,
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.red.shade800,
-                      fontFamily: 'Poppins',
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 8),
-              Text(
-                description,
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.grey.shade700,
-                  fontFamily: 'Roboto',
-                  // height: 1.,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Icon(
+                  CupertinoIcons.arrow_up_doc_fill,
+                  size: 32,
+                  color: Colors.red.shade800,
                 ),
-              ),
-              const SizedBox(height: 8),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    "Chat with PDF →",
-                    style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black),
+                const SizedBox(height: 10),
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.red.shade800,
+                    fontFamily: 'Poppins',
                   ),
-                  Align(
-                    alignment: Alignment.bottomRight,
-                    child: GestureDetector(
-                      onTap: () async {
-                        await controller.goToPdf();
-                      },
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  description,
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.grey.shade700,
+                    fontFamily: 'Roboto',
+                    // height: 1.,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      "Chat with PDF →",
+                      style: TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black),
+                    ),
+                    Align(
+                      alignment: Alignment.bottomRight,
                       child: Container(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 12, vertical: 6),
+                            horizontal: 8, vertical: 4),
                         decoration: BoxDecoration(
                           color: Colors.red.shade800,
                           borderRadius: BorderRadius.circular(20),
@@ -825,19 +1074,127 @@ class FeatureCard extends StatelessWidget {
                           'Try Now',
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 12,
+                            fontSize: 8,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 }
+
+
+// class FeatureCard extends StatelessWidget {
+//   final String title;
+//   final String description;
+
+//   const FeatureCard({
+//     super.key,
+//     required this.title,
+//     required this.description,
+//   });
+
+//   @override
+//   Widget build(BuildContext context) {
+//     HomeViewCTL controller = Get.find();
+//     return Card(
+//       elevation: 4,
+//       shape: RoundedRectangleBorder(
+//         borderRadius: BorderRadius.circular(15),
+//       ),
+//       child: Container(
+//         decoration: BoxDecoration(
+//           gradient: LinearGradient(
+//             colors: [Colors.red.shade50, Colors.white],
+//             begin: Alignment.topLeft,
+//             end: Alignment.bottomRight,
+//           ),
+//           borderRadius: BorderRadius.circular(15),
+//           border: Border.all(color: Colors.red.shade900, width: 1),
+//         ),
+//         child: Padding(
+//           padding: const EdgeInsets.all(16.0),
+//           child: Column(
+//             crossAxisAlignment: CrossAxisAlignment.start,
+//             children: [
+//               Row(
+//                 children: [
+//                   Icon(
+//                     CupertinoIcons.arrow_up_doc_fill,
+//                     size: 32,
+//                     color: Colors.red.shade800,
+//                   ),
+//                   const SizedBox(width: 10),
+//                   Text(
+//                     title,
+//                     style: TextStyle(
+//                       fontSize: 22,
+//                       fontWeight: FontWeight.bold,
+//                       color: Colors.red.shade800,
+//                       fontFamily: 'Poppins',
+//                     ),
+//                   ),
+//                 ],
+//               ),
+//               const SizedBox(height: 8),
+//               Text(
+//                 description,
+//                 style: TextStyle(
+//                   fontSize: 14,
+//                   color: Colors.grey.shade700,
+//                   fontFamily: 'Roboto',
+//                   // height: 1.,
+//                 ),
+//               ),
+//               const SizedBox(height: 8),
+//               Row(
+//                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                 children: [
+//                   const Text(
+//                     "Chat with PDF →",
+//                     style: TextStyle(
+//                         fontSize: 18,
+//                         fontWeight: FontWeight.bold,
+//                         color: Colors.black),
+//                   ),
+//                   Align(
+//                     alignment: Alignment.bottomRight,
+//                     child: GestureDetector(
+//                       onTap: () async {
+//                         await controller.goToPdf();
+//                       },
+//                       child: Container(
+//                         padding: const EdgeInsets.symmetric(
+//                             horizontal: 12, vertical: 6),
+//                         decoration: BoxDecoration(
+//                           color: Colors.red.shade800,
+//                           borderRadius: BorderRadius.circular(20),
+//                         ),
+//                         child: const Text(
+//                           'Try Now',
+//                           style: TextStyle(
+//                             color: Colors.white,
+//                             fontSize: 12,
+//                             fontWeight: FontWeight.bold,
+//                           ),
+//                         ),
+//                       ),
+//                     ),
+//                   ),
+//                 ],
+//               ),
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }

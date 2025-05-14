@@ -279,27 +279,32 @@ class PdfCompressView extends GetView<PdfCompressController> {
                 return const SizedBox();
               }),
 
-              const Spacer(),
+              // const Spacer(),
+              SizedBox(
+                                        height: SizeConfig.screenHeight * 0.01),
 
               // Compress button (only visible when file is selected)
               if (controller.selectedFile != null &&
                   !controller.isLoading.value &&
                   controller.compressedFile == null)
-                ElevatedButton(
-                  onPressed: controller.compressPdf,
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
+                Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 94),
+                  child: ElevatedButton(
+                    onPressed: controller.compressPdf,
+                    style: ElevatedButton.styleFrom(
+                      // padding: const EdgeInsets.symmetric(vertical: 12,horizontal: 32),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      backgroundColor: Colors.red.shade700
                     ),
-                    backgroundColor: Theme.of(context).primaryColor,
-                  ),
-                  child: const Text(
-                    'COMPRESS PDF',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+                    child: const Text(
+                      'Compress PDF',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),

@@ -317,13 +317,13 @@ class PdfMergeView extends GetView<PdfMergeController> {
                                       },
                                       style: ElevatedButton.styleFrom(
                                         padding: const EdgeInsets.symmetric(
-                                            vertical: 16, horizontal: 32),
+                                            vertical: 12, horizontal: 32),
                                         shape: RoundedRectangleBorder(
                                           borderRadius:
-                                              BorderRadius.circular(8),
+                                              BorderRadius.circular(12),
                                         ),
                                         backgroundColor:
-                                            Theme.of(context).primaryColor,
+                                           Colors.red.shade700
                                       ),
                                       child: const Text(
                                         'Merge All',
