@@ -9,6 +9,8 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:ai_web_analyzer/app/modules/home/controller/home_view_ctl.dart';
 import 'package:ai_web_analyzer/app/utills/size_config.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:in_app_review/in_app_review.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -39,6 +41,73 @@ class HomeView extends GetView<HomeViewCTL> {
     SizeConfig().init(context);
     PdfOperationsController ppcontroller = Get.put(PdfOperationsController());
     return Scaffold(
+      bottomSheet: Container(
+        height: SizeConfig.blockSizeVertical * 10,
+        // margin: EdgeInsets.only(top: SizeConfig.blockSizeVertical * 23),
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: Colors.white.withOpacity(0.6), // Transparent background
+          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 10,
+              offset: Offset(0, -2),
+            ),
+          ],
+        ),
+        padding: EdgeInsets.all(16),
+        // height: 100,
+        // width: SizeConfig.screenWidth / 2,
+        child: GestureDetector(
+          onTap: () async {
+            final InAppReview inAppReview = InAppReview.instance;
+
+            inAppReview.openStoreListing();
+          },
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                margin:
+                    EdgeInsets.only(bottom: SizeConfig.blockSizeVertical * 0.5),
+                child: Text(
+                  "Rate Us",
+                  style: GoogleFonts.alata(
+                      color: Colors.black,
+                      fontSize: SizeConfig.blockSizeHorizontal * 3.5,
+                      fontWeight: FontWeight.w600),
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.star,
+                    color: Colors.amber,
+                  ),
+                  Icon(
+                    Icons.star,
+                    color: Colors.amber,
+                  ),
+                  Icon(
+                    Icons.star,
+                    color: Colors.amber,
+                  ),
+                  Icon(
+                    Icons.star,
+                    color: Colors.amber,
+                  ),
+                  Icon(
+                    Icons.star,
+                    color: Colors.grey,
+                  ),
+                ],
+              )
+            ],
+          ),
+        ),
+      ),
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(kToolbarHeight),
         child: AppBar(
@@ -998,6 +1067,7 @@ class HomeView extends GetView<HomeViewCTL> {
                 //     ],
                 //   ),
                 // ),
+                verticalSpace(SizeConfig.blockSizeVertical * 10),
               ],
             ),
           ),
