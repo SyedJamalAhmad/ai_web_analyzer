@@ -27,7 +27,7 @@ class HomeView extends GetView<HomeViewCTL> {
 
     void _sendFeedback(BuildContext context) async {
       final Uri emailLaunchUri = Uri.parse(
-          'https://play.google.com/store/apps/details?id=com.ai.caloriecounter.scanner');
+          'https://play.google.com/store/apps/details?id=app.chatwebai.pdfai_app');
 
       if (await canLaunchUrl(emailLaunchUri)) {
         await launchUrl(emailLaunchUri);
@@ -135,6 +135,7 @@ class HomeView extends GetView<HomeViewCTL> {
           elevation: 0,
           backgroundColor:
               Colors.transparent, // Must be transparent to see gradient
+             
           // actions: [
           //   IconButton(
           //     icon: const Icon(Icons.home, color: Colors.white),
@@ -155,21 +156,23 @@ class HomeView extends GetView<HomeViewCTL> {
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
-            const DrawerHeader(
+             DrawerHeader(
+              
               decoration: BoxDecoration(
-                color: Colors.blue,
+                color: Colors.red.shade800,
               ),
-              child: Text('Menu',
-                  style: TextStyle(color: Colors.white, fontSize: 24)),
+              child: Image.asset("assets/icon/pdficon.png"),
+              // child: Text('Menu',
+              //     style: TextStyle(color: Colors.white, fontSize: 24)),
             ),
             ListTile(
-              leading: const Icon(Icons.star_rate),
+              leading: const Icon(Icons.star_rate,color: Colors.red,),
               title: const Text('Feedback'),
               onTap: () => _sendFeedback(context),
             ),
             ListTile(
-              leading: const Icon(Icons.share),
-              title: const Text('Share'),
+              leading: const Icon(Icons.share,color: Colors.red,),
+              title: const Text('Share',),
               onTap: () => _shareApp(context),
             ),
           ],
