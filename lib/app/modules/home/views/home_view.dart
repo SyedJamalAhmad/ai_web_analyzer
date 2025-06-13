@@ -111,6 +111,18 @@ class HomeView extends GetView<HomeViewCTL> {
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(kToolbarHeight),
         child: AppBar(
+          leading: Builder(
+            builder: (context) => IconButton(
+              icon: Icon(
+                Icons.menu,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                // Opens the drawer
+                Scaffold.of(context).openDrawer();
+              },
+            ),
+          ),
           flexibleSpace: Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -135,7 +147,7 @@ class HomeView extends GetView<HomeViewCTL> {
           elevation: 0,
           backgroundColor:
               Colors.transparent, // Must be transparent to see gradient
-             
+
           // actions: [
           //   IconButton(
           //     icon: const Icon(Icons.home, color: Colors.white),
@@ -156,9 +168,9 @@ class HomeView extends GetView<HomeViewCTL> {
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
-             DrawerHeader(
-              
+            DrawerHeader(
               decoration: BoxDecoration(
+                // color: Color(0xffF89C9E),
                 color: Colors.red.shade800,
               ),
               child: Image.asset("assets/icon/pdficon.png"),
@@ -166,13 +178,21 @@ class HomeView extends GetView<HomeViewCTL> {
               //     style: TextStyle(color: Colors.white, fontSize: 24)),
             ),
             ListTile(
-              leading: const Icon(Icons.star_rate,color: Colors.red,),
+              leading: const Icon(
+                Icons.star_rate,
+                color: Colors.red,
+              ),
               title: const Text('Feedback'),
               onTap: () => _sendFeedback(context),
             ),
             ListTile(
-              leading: const Icon(Icons.share,color: Colors.red,),
-              title: const Text('Share',),
+              leading: const Icon(
+                Icons.share,
+                color: Colors.red,
+              ),
+              title: const Text(
+                'Share',
+              ),
               onTap: () => _shareApp(context),
             ),
           ],
